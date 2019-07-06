@@ -1,0 +1,62 @@
+
+
+!!! fix transfer historys
+!! fix negative entries
+!! fix 0 as default value in create customer
+!! fix customer form: Bday, civil status, gender
+!! confirmation modals!
+!! fix overdraft account details
+!! create footer
+!! store teller access to session
+!! fix reset choose customer table
+
+
+id	owner	type	balance 	date_created
+
+
+SELECT customer_first_name, customer_middle_name, customer_last_name FROM  customer WHERE customer_id=1;
+
+
+SELECT a.account_id, a.account_type, a.account_currency, a.account_sequence, a.account_overdraft, a.account_date_created, a.customer_id, c.customer_first_name, c.customer_middle_name, c.customer_last_name
+FROM account a
+INNER JOIN customer c
+ON a.customer_id = c.customer_id
+
+
+
+PHP000001C00
+
+
+INSERT INTO ledger_entry(entry_type, entry_amount,account_id) VALUES ('C',1000,'PHP000001C00');
+
+Account Number
+customer
+account type
+overdraft
+currency
+sequence
+balance
+
+
+
+SELECT 
+SUM(SELECT entry_amount FROM ledger_entry WHERE account_id='PHP000001C00' AND entry_type='D') AS TOTAL_CREDIT
+FROM ledger_entry 
+WHERE account_id='PHP000001C00';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
