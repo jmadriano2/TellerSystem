@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">Create Account - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<h2>Deposit</h2>
+
+		<b:form horizontal="true">
+
+			<b:inputText labelColMd="2" colMd="3" label="Account Number"
+				readonly="true" value="#{transactionBean.accountNumber}" />
+
+			<b:inputText labelColMd="2" colMd="2" required="true"
+				label="Deposit Amount" value="#{transactionBean.amount}"
+				required-message="The field 'Deposit Amount' must not be empty" />
+
+			<b:growl />
+
+			<b:commandButton value="Deposit"
+				action="#{transactionBean.deposit()}" look="primary" col-md="2"
+				offset="8" style="width:100%" />
+		</b:form>
+	</ui:define>
+</ui:composition>

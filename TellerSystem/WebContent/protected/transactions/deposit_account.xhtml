@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">Choose Customer - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<b:row class="body_header">
+			<h3 style="text-align: center">Choose Withdrawal Account</h3>
+		</b:row>
+
+
+		<b:row class="body_form">
+			<h:form class="body_form">
+				<b:dataTable value="#{transactionBean.transactionAccounts}"
+					var="transactionAccount" select="true"
+					onselect='ajax:transactionBean.setTransaction(transactionAccount.accountId,transactionAccount.overdraft);'>
+
+					<b:dataTableColumn value="#{transactionAccount.accountId}"
+						label="Account Number" order="asc"
+						header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn value="#{transactionAccount.owner}"
+						label="Owner" header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn
+						value="#{transactionBean.toCurrencyFormat(transactionAccount.balance)}"
+						label="Balance" header-style-class='table_header'
+						content-style-class='table_content' />
+					<b:dataTableColumn value="#{transactionAccount.balanceStatus}"
+						label="Status" header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn
+						value="#{transactionBean.toCurrencyFormat(transactionAccount.overdraft)}"
+						label="Overdraft" header-style-class='table_header'
+						content-style-class='table_content' />
+
+				</b:dataTable>
+
+				<b:commandButton value="Deposit" look="info" action="deposit"
+					style-class="transaction_button" />
+
+			</h:form>
+		</b:row>
+
+	</ui:define>
+</ui:composition>

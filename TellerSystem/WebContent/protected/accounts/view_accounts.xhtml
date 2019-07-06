@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">View Accounts - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<h3 style="text-align: center">Account List</h3>
+
+		<h:form>
+			<b:dataTable value="#{accountBean.accountList}" var="account">
+
+				<b:dataTableColumn value="#{account.account_id}"
+					label="Account Number" order="asc"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+
+				<b:dataTableColumn value="#{account.customer_name}"
+					label="Account Owner"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+
+				<b:dataTableColumn
+					value="#{accountBean.typeName(account.account_type)}"
+					label="Account Type"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+
+				<b:dataTableColumn
+					value="#{accountBean.toCurrencyFormat(account.balance)}"
+					label="Balance"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+					
+				<b:dataTableColumn
+					value="#{account.balanceStatus}"
+					label="Status"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+
+				<b:dataTableColumn value="#{account.date_created}"
+					label="Date Created"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+
+				<b:dataTableColumn label="View"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578'>
+
+					<h:commandLink value="Details"
+						action="#{accountBean.viewAccountDetails(account.account_id)}" />
+
+				</b:dataTableColumn>
+			</b:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

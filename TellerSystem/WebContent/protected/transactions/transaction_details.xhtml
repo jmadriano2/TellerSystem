@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">Account Details - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<h2>Transaction Details</h2>
+
+		<b:form horizontal="true">
+		
+			<b:inputText labelColMd="2" colMd="2"
+				label="Transaction Type" readonly="true"
+				value="#{transactionBean.getTransactionType()}" />
+		
+			<b:inputText labelColMd="2" colMd="2"
+				label="Account Number" readonly="true"
+				value="#{transactionBean.accountNumber}" />
+		
+			<b:inputText labelColMd="2" colMd="2"
+				label="Balance on Transaction" readonly="true"
+				value="#{transactionBean.getTransactionBalance()}" />
+				
+			<b:inputText labelColMd="2" colMd="2" maxlength="2"
+				label="Transaction Amount" value="#{transactionBean.getTransactionAmount()}" readonly="true" />
+
+			<b:inputText labelColMd="2" colMd="2"
+				label="Resulting Balance" readonly="true"
+				value="#{transactionBean.getResultBalance()}" />
+
+			<b:inputText labelColMd="2" colMd="2" label="Transaction Date | Time" value="#{transactionBean.getTransactionDate()}" 
+               readonly="true"/>
+
+			<b:inputText labelColMd="2" colMd="2" label="Trace Number" value="#{transactionBean.getTraceNumber()}" 
+               readonly="true"/>
+               
+			<b:growl />
+
+			<b:commandButton value="View All Accounts"
+					action="return_to_view_accounts" look="primary"
+					col-md="2" offset="8" style="width:100%" />
+		</b:form>
+	</ui:define>
+</ui:composition>

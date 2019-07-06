@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+	version="2.3">
+
+	<navigation-rule>
+		<display-name>index.xhtml</display-name>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/protected/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/protected/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/home.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>customer</from-outcome>
+			<to-view-id>/protected/customer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>accounts</from-outcome>
+			<to-view-id>/protected/accounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>transactions</from-outcome>
+			<to-view-id>/protected/transactions.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/customer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create_customer</from-outcome>
+			<to-view-id>/protected/customer/create_customer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>view_customers</from-outcome>
+			<to-view-id>/protected/customer/view_customers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/customer/create_customer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create_customer_error</from-outcome>
+			<to-view-id>/protected/customer/create_customer.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create_customer_success</from-outcome>
+			<to-view-id>/protected/customer/customer_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/customer/view_customers.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>customer_details</from-outcome>
+			<to-view-id>/protected/customer/customer_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/customer/customer_details.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>return_to_view_customers</from-outcome>
+			<to-view-id>/protected/customer/view_customers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>amend_customer</from-outcome>
+			<to-view-id>/protected/customer/amend_customer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/customer/amend_customer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>amend_customer_success</from-outcome>
+			<to-view-id>/protected/customer/customer_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/accounts.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>choose_customer</from-outcome>
+			<to-view-id>/protected/accounts/choose_customer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>view_accounts</from-outcome>
+			<to-view-id>/protected/accounts/view_accounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/accounts/choose_customer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create_account</from-outcome>
+			<to-view-id>/protected/accounts/create_account.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/accounts/create_account.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create_account_error</from-outcome>
+			<to-view-id>/protected/accounts/create_account.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create_account_success</from-outcome>
+			<to-view-id>/protected/accounts/account_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/accounts/view_accounts.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>account_details</from-outcome>
+			<to-view-id>/protected/accounts/account_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/accounts/account_details.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>return_to_view_accounts</from-outcome>
+			<to-view-id>/protected/accounts/view_accounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>deposit_account</from-outcome>
+			<to-view-id>/protected/transactions/deposit_account.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sender_account</from-outcome>
+			<to-view-id>/protected/transactions/sender_account.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>withdrawal_account</from-outcome>
+			<to-view-id>/protected/transactions/withdrawal_account.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/deposit_customer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>deposit</from-outcome>
+			<to-view-id>/protected/transactions/deposit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/deposit.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>deposit_success</from-outcome>
+			<to-view-id>/protected/transactions/transaction_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/withdrawal_customer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>withdraw</from-outcome>
+			<to-view-id>/protected/transactions/withdraw.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/withdraw.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>withdrawal_success</from-outcome>
+			<to-view-id>/protected/transactions/transaction_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/sender_account.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>recipient_account</from-outcome>
+			<to-view-id>/protected/transactions/recipient_account.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/recipient_account.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>transfer</from-outcome>
+			<to-view-id>/protected/transactions/transfer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/transfer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>transfer_success</from-outcome>
+			<to-view-id>/protected/transactions/transaction_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

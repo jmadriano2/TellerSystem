@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">Accounts - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<b:row class="home">
+			<h:form>
+				<b:column col-md="3" offset="2">
+					<h:commandLink action="choose_customer"
+						actionListener="#{customerBean.resetCustomerBean()}">
+						<b:well style-class="homeButton">
+							<b:image library="img" name="add_account_icon.png"
+								tooltip="Add Account" class="buttonIcon" />
+						</b:well>
+					</h:commandLink>
+				</b:column>
+				<b:column col-md="3" offset="2">
+					<h:commandLink action="view_accounts"
+						actionListener="#{accountBean.resetAccountBean()}">
+						
+							<b:well style-class="homeButton">
+								<b:image library="img" name="list_account_icon.png"
+									tooltip="View All Accounts" class="buttonIcon" />
+							</b:well>
+					</h:commandLink>
+				</b:column>
+			</h:form>
+		</b:row>
+	</ui:define>
+</ui:composition>

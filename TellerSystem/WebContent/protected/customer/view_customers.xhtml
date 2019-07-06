@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">View Customers - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<h3 style="text-align: center">Customer List</h3>
+
+		<h:form>
+			<b:dataTable value="#{customerBean.customerList}" var="customer">
+				<b:dataTableColumn value="#{customer.customer_id}"
+					label="Customer Number" order="asc"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578'/>
+				<b:dataTableColumn value="#{customer.customer_full_name}"
+					label="Name" header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+				<b:dataTableColumn value="#{customer.customer_occupation}"
+					label="Occupation" header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+				<b:dataTableColumn value="#{customer.customer_date_joined}"
+					label="Date Joined" header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578' />
+
+				<b:dataTableColumn label="View"
+					header-style='background:#6c7ae0;color:#f9e9f4'
+					content-style='background:#ffffff;color:#a78578'>
+
+					<h:commandLink value="Details"
+						action="#{customerBean.viewCustomerDetails(customer.customer_id)}" />
+
+				</b:dataTableColumn>
+			</b:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">Home - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<b:column col-md="2" offset="1">
+			<h:link outcome="customer">
+				<b:well style-class="homeButton">
+					<b:image library="img" name="customer_icon.png" tooltip="Customer"
+						class="buttonIcon" />
+				</b:well>
+			</h:link>
+		</b:column>
+		<b:column col-md="2" offset="2">
+			<h:link outcome="accounts">
+				<b:well style-class="homeButton">
+					<b:image library="img" name="account_icon.png" tooltip="Accounts"
+						class="buttonIcon" />
+				</b:well>
+			</h:link>
+		</b:column>
+		<b:column col-md="2" offset="2">
+			<h:link outcome="transactions">
+				<b:well style-class="homeButton">
+					<b:image library="img" name="transaction_icon.png" tooltip="Transactions"
+						class="buttonIcon" />
+				</b:well>
+			</h:link>
+		</b:column>
+		<b:column col-md="2" offset="3">
+			<h:link>
+				<b:well style-class="homeButton">
+					<b:image library="img" name="teller_icon.png" tooltip="Teller"
+						class="buttonIcon" />
+				</b:well>
+			</h:link>
+		</b:column>
+		<b:column col-md="2" offset="2">
+			<h:link>
+				<b:well style-class="homeButton">
+					<b:image library="img" name="history_icon.png" tooltip="History"
+						class="buttonIcon" />
+				</b:well>
+			</h:link>
+		</b:column>
+	</ui:define>
+</ui:composition>

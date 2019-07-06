@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15620279562360" configfile="/TellerSystem/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf15620279702891" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15622037343332" inlinks="pf15620509569415" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="380" id="pf15620509569417" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15620509569415 pf156231519348019" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="customer.xhtml" x="338" y="967" id="pf15620509569418" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf156231560893822 pf156231560893823" inlinks="pf156231527948820" path="/protected/customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="customer/create_customer.xhtml" x="554" y="764" id="pf15621337789781" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf15621337789782 pf156231560893824" inlinks="pf15621337789782 pf156231560893822" path="/protected/customer/create_customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="customer/create_customer.xhtm" x="122" y="1346" id="pf15621337789783" referenceLink="//@navigationRule.6/@fromViewId|" path="/protected/customer/create_customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="customer/view_customer.xhtml" x="770" y="1148" id="pf15621337789785" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf156215720146213 pf156231560893825" inlinks="pf15621472495379 pf156215575242811 pf156231560893824" path="/protected/customer/customer_details.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="customer/view_customers.xhtml" x="554" y="1148" id="pf15621420316998" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf15621472495379" inlinks="pf156215720146213 pf156231560893823" path="/protected/customer/view_customers.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="customer/amend_customer.xhtml" x="554" y="1532" id="pf156215575242812" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf156215575242811" inlinks="pf156231560893825" path="/protected/customer/amend_customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="accounts.xhtml" x="770" y="570" id="pf156215859335015" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf156228147586810 pf156231560893826" inlinks="pf156231527948821" path="/protected/accounts.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/home.xhtml" x="554" y="380" id="pf15622037343333" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf156231527948820 pf156231527948821 pf156231560893827" inlinks="pf15622037343332 pf156231519348019" path="/protected/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/accounts/choose_customer.xhtml" x="770" y="1532" id="pf15622246064717" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf15622246064718" inlinks="pf156228147586810" path="/protected/accounts/choose_customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/accounts/create_account.xhtml" x="986" y="1338" id="pf15622246064719" referenceLink="//@navigationRule.10/@fromViewId|" outlinks="pf156222460647110 pf156231560893828" inlinks="pf15622246064718 pf156222460647110" path="/protected/accounts/create_account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/accounts/account_details.xhtml" x="1202" y="954" id="pf156222460647112" referenceLink="//@navigationRule.12/@fromViewId|" outlinks="pf15622814610442" inlinks="pf15622814610443 pf156231560893828" path="/protected/accounts/account_details.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/accounts/view_accounts.xhtml" x="986" y="954" id="pf15622814610444" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" outlinks="pf15622814610443" inlinks="pf15622814610442 pf156231560893826" path="/protected/accounts/view_accounts.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions.xhtml" x="338" y="583" id="pf15622814610445" referenceLink="//@navigationRule.13/@fromViewId|" outlinks="pf156228168006613 pf156231585319432 pf156231659243540" inlinks="pf156231560893827" path="/protected/transactions.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/deposit_customer.xhtml" id="pf15622814650659" referenceLink="//@navigationRule.15/@fromViewId|" outlinks="pf156228153128811" path="/protected/transactions/deposit_customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/deposit.xhtml" id="pf156228153128812" referenceLink="//@navigationRule.15/@fromViewId|" outlinks="pf15624142021031" inlinks="pf156228153128811" path="/protected/transactions/deposit.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/deposit_account.xhtml" id="pf156228168006614" referenceLink="//@navigationRule.13/@navigationCase.0/@toViewId|" inlinks="pf156228168006613" path="/protected/transactions/deposit_account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/transaction_details.xhtml" id="pf156231560893830" referenceLink="//@navigationRule.15/@navigationCase.0/@toViewId|" inlinks="pf156231693816445 pf156233351704658 pf15624142021031" path="/protected/transactions/transaction_details.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/sender_account.xhtml" id="pf156231585319434" referenceLink="//@navigationRule.18/@fromViewId|" outlinks="pf156233120146750" inlinks="pf156231585319432" path="/protected/transactions/sender_account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/withdrawal_account.xhtml" id="pf156231659243541" referenceLink="//@navigationRule.13/@navigationCase.2/@toViewId|" inlinks="pf156231659243540" path="/protected/transactions/withdrawal_account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/withdrawal_customer.xhtml" id="pf156231659243542" referenceLink="//@navigationRule.16/@fromViewId|" outlinks="pf156231659243543" path="/protected/transactions/withdrawal_customer.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/withdraw.xhtml" id="pf156231659243544" referenceLink="//@navigationRule.17/@fromViewId|" outlinks="pf156231693816445" inlinks="pf156231659243543" path="/protected/transactions/withdraw.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/recipient_account.xhtml" id="pf156233120146751" referenceLink="//@navigationRule.19/@fromViewId|" outlinks="pf156233296154654" inlinks="pf156233120146750" path="/protected/transactions/recipient_account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="protected/transactions/transfer.xhtml" id="pf156233296154655" referenceLink="//@navigationRule.20/@fromViewId|" outlinks="pf156233351704658" inlinks="pf156233296154654" path="/protected/transactions/transfer.xhtml"/>
+  <links id="pf15620509569415" target="pf15620279702891" source="pf15620509569417" outcome="logout"/>
+  <links id="pf15621472495379" target="pf15621337789785" source="pf15621420316998" outcome="customer_details" redirect="true"/>
+  <links id="pf156215575242811" target="pf15621337789785" source="pf156215575242812" outcome="amend_customer_success" redirect="true"/>
+  <links id="pf156215720146213" target="pf15621420316998" source="pf15621337789785" outcome="return_to_view_customers" redirect="true"/>
+  <links id="pf15622037343332" target="pf15622037343333" source="pf15620279702891" outcome="login" redirect="true"/>
+  <links id="pf15622246064718" target="pf15622246064719" source="pf15622246064717" outcome="create_account" redirect="true"/>
+  <links id="pf15622814610443" target="pf156222460647112" source="pf15622814610444" outcome="account_details" redirect="true"/>
+  <links id="pf15622814610442" target="pf15622814610444" source="pf156222460647112" outcome="return_to_view_accounts" redirect="true"/>
+  <links id="pf15621337789782" target="pf15621337789781" source="pf15621337789781" outcome="create_customer_error">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf156222460647110" target="pf15622246064719" source="pf15622246064719" outcome="create_account_error">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf156228147586810" target="pf15622246064717" source="pf156215859335015" outcome="choose_customer" redirect="true"/>
+  <links id="pf156228153128811" target="pf156228153128812" source="pf15622814650659" outcome="deposit" redirect="true"/>
+  <links id="pf156228168006613" target="pf156228168006614" source="pf15622814610445" outcome="deposit_account" redirect="true"/>
+  <links id="pf156231519348019" target="pf15622037343333" source="pf15620509569417" outcome="home" redirect="true"/>
+  <links id="pf156231527948820" target="pf15620509569418" source="pf15622037343333" outcome="customer" redirect="true"/>
+  <links id="pf156231527948821" target="pf156215859335015" source="pf15622037343333" outcome="accounts" redirect="true"/>
+  <links id="pf156231560893827" target="pf15622814610445" source="pf15622037343333" outcome="transactions" redirect="true"/>
+  <links id="pf156231560893822" target="pf15621337789781" source="pf15620509569418" outcome="create_customer" redirect="true"/>
+  <links id="pf156231560893823" target="pf15621420316998" source="pf15620509569418" outcome="view_customers" redirect="true"/>
+  <links id="pf156231560893824" target="pf15621337789785" source="pf15621337789781" outcome="create_customer_success" redirect="true"/>
+  <links id="pf156231560893825" target="pf156215575242812" source="pf15621337789785" outcome="amend_customer" redirect="true"/>
+  <links id="pf156231560893826" target="pf15622814610444" source="pf156215859335015" outcome="view_accounts" redirect="true"/>
+  <links id="pf156231560893828" target="pf156222460647112" source="pf15622246064719" outcome="create_account_success" redirect="true"/>
+  <links id="pf156231585319432" target="pf156231585319434" source="pf15622814610445" outcome="sender_account" redirect="true"/>
+  <links id="pf156231659243540" target="pf156231659243541" source="pf15622814610445" outcome="withdrawal_account" redirect="true"/>
+  <links id="pf156231659243543" target="pf156231659243544" source="pf156231659243542" outcome="withdraw" redirect="true"/>
+  <links id="pf156231693816445" target="pf156231560893830" source="pf156231659243544" outcome="withdrawal_success" redirect="true"/>
+  <links id="pf156233120146750" target="pf156233120146751" source="pf156231585319434" outcome="recipient_account" redirect="true"/>
+  <links id="pf156233296154654" target="pf156233296154655" source="pf156233120146751" outcome="transfer" redirect="true"/>
+  <links id="pf156233351704658" target="pf156231560893830" source="pf156233296154655" outcome="transfer_success" redirect="true"/>
+  <links id="pf15624142021031" target="pf156231560893830" source="pf156228153128812" outcome="deposit_success" redirect="true"/>
+</pageflow:Pageflow>

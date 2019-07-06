@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">Account Details - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<h2>Account Details</h2>
+
+		<b:form horizontal="true">
+		
+			<b:inputText labelColMd="2" colMd="2"
+				label="Account Number" readonly="true"
+				value="#{accountBean.accountId}" />
+		
+			<b:inputText labelColMd="2" colMd="3"
+				label="Customer" readonly="true"
+				value="#{accountBean.customerName}" />
+				
+			<b:inputText labelColMd="2" colMd="2"
+				label="Customer Number" readonly="true"
+				value="#{accountBean.paddedCustomerId()}" />
+
+			<b:inputText labelColMd="2" colMd="2" maxlength="2"
+				label="Account Type" value="#{accountBean.typeName()}" readonly="true" />
+
+			<b:inputText labelColMd="2" colMd="2" label="Overdraft Limit" value="#{accountBean.overdraft}" 
+               readonly="true"/>
+
+				
+			<b:inputText labelColMd="2" colMd="1"  maxlength="2"
+				label="Currency" value="#{accountBean.currency}" readonly="true" />
+				
+			<b:inputText labelColMd="2" colMd="1" maxlength="2"
+				label="Sequence" value="#{accountBean.paddedAccountSequence()}" readonly="true" />
+
+			<b:inputText labelColMd="2" colMd="2" label="Balance" value="#{accountBean.getBalanceAmount()}" 
+               readonly="true"/>
+               
+			<b:growl />
+
+			<b:commandButton value="View All Accounts"
+					action="return_to_view_accounts" look="primary"
+					col-md="2" offset="8" style="width:100%" />
+		</b:form>
+	</ui:define>
+</ui:composition>

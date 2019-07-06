@@ -1,0 +1,154 @@
+body {
+	background-image: url("#{resource['img/background_pic2.png']}");
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+}
+
+.main {
+	background: rgb(223, 196, 241, 0.6) !important;
+	background: linear-gradient(250deg, rgba(223, 196, 241, 0.5833683815323004)
+		0%, rgba(241, 215, 242, 0.8130602582830007) 38%,
+		rgba(252, 208, 233, 1) 100%) !important;
+	border-radius: 25px !important;
+	border: 4px solid #d7b2f0 !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	padding-left: 1% !important;
+	padding-right: 1% !important;
+}
+
+.main_title {
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+	margin: 0;
+}
+
+.main_header {
+	height: 10%;
+	margin-top: 0px;
+	border-bottom: 4px solid #d7b2f0 !important;
+	/*background: red;*/
+}
+
+.logged_in {
+    position: absolute;
+    padding-top:1%;
+    padding-left:3%;
+    padding-right:3%;
+    top: 0;
+    display: block;
+}
+
+.header_button {
+	position: relative;
+	top: 15%;
+	width: 100%;
+}
+
+.main_body {
+	position: relative;
+	height: 85%;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+	/*background: blue;*/
+}
+
+.main_footer {
+	height: 5%;
+	/*background: green;*/
+}
+
+.login {
+	position: relative;
+	top: 15%;
+}
+
+.form-signin-heading {
+	margin-bottom: 10%;
+}
+
+.homeButton {
+	width: 100%;
+	padding-top: 100%; /* 1:1 Aspect Ratio */
+	position: relative; /* If you want text inside of it */
+	margin-top: 20%;
+	border-radius: 25px !important;
+	background: #E0FFFF !important;
+	border: 4px solid #00CED1 !important;
+}
+
+.homeButton:hover {
+	background: aliceblue !important;
+	border: 4px solid #00CED1 !important;
+}
+
+.homeButton:active {
+	background: lavender !important;
+	border: 4px solid #00CED1 !important;
+}
+
+.buttonIcon {
+	width: 100%;
+}
+
+.buttonIcon.transfer_img {
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.page_title {
+	display: block;
+	font-size: 1.5em;
+	margin-top: 0.83em;
+	margin-bottom: 0.83em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+
+.transfer_img {
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.table_header {
+	background:#6c7ae0;
+	color:#f9e9f4
+}
+
+.table_content {
+	background:#ffffff;
+	color:#a78578
+}
+
+.selected > *{
+	background-color: #D3D3D3 !important;
+	color:#a78578
+}
+
+.transaction_button {
+	position: absolute;
+    display: block;
+	width:17%;
+	bottom: 2%; left: 2%;
+}
+
+.body_header {
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    display: block;
+}
+
+.body_form {
+    position: absolute;
+    top: 5.5%; right: 1%; bottom: 0; left: 1%;
+    display: block;
+}
+
+
+
+
+
+
