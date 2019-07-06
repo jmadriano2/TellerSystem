@@ -57,6 +57,50 @@ public class TransactionDao {
 		return transactionAccount;
 	}
 
+	public static List<TransactionAccount> getRecipientAccounts(String accountNumber) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		List<TransactionAccount> recipientAccount = new ArrayList<>();
+
+		try {
+			con = DataConnect.getConnection();
+			ps = con.prepareStatement("SELECT customer_first_name, customer_middle_name, customer_last_name, "
+					+ "account_id, account_overdraft FROM customer c INNER JOIN account a "
+					+ "ON c.customer_id = a.customer_id WHERE account_currency=? AND account_id NOT IN (?)");
+
+			ps.setString(1, accountNumber.substring(0, 3));
+			ps.setString(2, accountNumber);
+			
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String firstName = rs.getString("customer_first_name");
+				String middleName = rs.getString("customer_middle_name");
+				if (rs.wasNull()) {
+					middleName = "";
+				}
+				String lastName = rs.getString("customer_last_name");
+
+				String fullName = CustomStringUtils.fullName(firstName, middleName, lastName);
+
+				String accountId = rs.getString("account_id");
+				double overdraft = rs.getInt("account_overdraft");
+
+				Balance balance = LedgerDao.getBalance(accountId);
+				double balanceAmount = balance.getBalance();
+				String balanceStatus = balance.getBalanceStatus();
+
+				recipientAccount
+						.add(new TransactionAccount(accountId, fullName, balanceAmount, balanceStatus, overdraft));
+			}
+		} catch (SQLException ex) {
+			System.out.println("Login error -->" + ex.getMessage());
+		} finally {
+			DataConnect.close(con);
+		}
+		return recipientAccount;		
+	}
+
 	public static Transaction getTransaction(int traceNumber) {
 		Connection con = null;
 		PreparedStatement ps = null;

@@ -21,6 +21,7 @@ import com.finastra.jade.tellersystem.util.CustomStringUtils;
 @ManagedBean
 public class TransactionBean {
 	private List<TransactionAccount> transactionAccounts;
+	private List<TransactionAccount> recipientAccounts;
 
 	private String type;
 	private String accountNumber;
@@ -46,7 +47,17 @@ public class TransactionBean {
 		amount = 0;
 		transactionAccounts = TransactionDao.getAllTransactionAccounts();
 	}
+	
+	public void resetRecipientAccounts() {
+		amount = 0;
+		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
+	}
 
+	public List<TransactionAccount> recipientAccounts() {
+		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
+		return recipientAccounts;
+	}
+	
 	public List<TransactionAccount> getTransactionAccounts() {
 		return transactionAccounts;
 	}

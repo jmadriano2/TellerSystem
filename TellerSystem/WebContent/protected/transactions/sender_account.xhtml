@@ -28,6 +28,7 @@
 			<h:form class="body_form">
 				<b:dataTable value="#{transactionBean.transactionAccounts}"
 					var="transactionAccount" select="true"
+					actionListener="#{transactionBean.resetTransactionBean()}"
 					onselect='ajax:transactionBean.setTransaction(transactionAccount.accountId,transactionAccount.overdraft);'>
 
 					<b:dataTableColumn value="#{transactionAccount.accountId}"
@@ -54,11 +55,13 @@
 
 				</b:dataTable>
 
-				<b:commandButton value="Select Sender" look="info" action="recipient_account"
-					style-class="transaction_button" />
+				<b:commandButton value="Select Sender" look="info"
+					actionListener="#{transactionBean.resetRecipientAccounts()}"
+					action="recipient_account" style-class="transaction_button" />
 
 			</h:form>
 		</b:row>
+
 
 	</ui:define>
 </ui:composition>

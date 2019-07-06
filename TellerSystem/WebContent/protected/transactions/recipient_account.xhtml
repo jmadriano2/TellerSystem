@@ -12,6 +12,7 @@
 	<ui:define name="custom">
 		<h:outputStylesheet library="css" name="appStyle.css" />
 		<h:outputScript library="js" name="vcenter.js" />
+		<h:outputScript library="js" name="customEmptyDataTable.js" />
 	</ui:define>
 
 	<ui:define name="header">
@@ -26,8 +27,8 @@
 
 		<b:row class="body_form">
 			<h:form class="body_form">
-				<b:dataTable value="#{transactionBean.transactionAccounts}"
-					var="transactionAccount" select="true"
+				<b:dataTable value="#{transactionBean.recipientAccounts()}"
+					var="transactionAccount" select="true" 
 					onselect='ajax:transactionBean.setTransferRecipient(transactionAccount.accountId);'>
 
 					<b:dataTableColumn value="#{transactionAccount.accountId}"
@@ -56,6 +57,10 @@
 
 				<b:commandButton value="Select Recipient" look="info" action="transfer"
 					style-class="transaction_button" />
+					
+				<h:commandButton id="hdnBtn"
+					actionListener="#{transactionBean.resetTransactionBean()}"
+					style="display: none;" />
 
 			</h:form>
 		</b:row>
