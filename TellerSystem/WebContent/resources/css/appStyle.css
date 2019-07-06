@@ -12,39 +12,47 @@ body {
 		rgba(252, 208, 233, 1) 100%) !important;
 	border-radius: 25px !important;
 	border: 4px solid #d7b2f0 !important;
-	padding-top: 0px !important;
-	padding-bottom: 0px !important;
-	padding-left: 1% !important;
-	padding-right: 1% !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 .main_title {
 	text-align: center;
 	font-weight: bold;
 	font-style: italic;
+	padding: 0.833%;
 	margin: 0;
 }
 
 .main_header {
-	height: 10%;
-	margin-top: 0px;
+	position: relative; 
+	height: 10% !important;
+	width: 100% !important;
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+	padding: 0.833%;
 	border-bottom: 4px solid #d7b2f0 !important;
+	height: 10%;
 	/*background: red;*/
 }
 
-.logged_in {
-    position: absolute;
-    padding-top:1%;
-    padding-left:3%;
-    padding-right:3%;
-    top: 0;
-    display: block;
+.fill_parent {
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	padding: 0 !important;
 }
 
 .header_button {
-	position: relative;
-	top: 15%;
-	width: 100%;
+	width: 15%;
+}
+
+.logout {
+	text-align: right !important;
 }
 
 .main_body {
@@ -114,41 +122,41 @@ body {
 }
 
 .table_header {
-	background:#6c7ae0;
-	color:#f9e9f4
+	background: #6c7ae0;
+	color: #f9e9f4
 }
 
 .table_content {
-	background:#ffffff;
-	color:#a78578
+	background: #ffffff;
+	color: #a78578
 }
 
-.selected > *{
+.selected>* {
 	background-color: #D3D3D3 !important;
-	color:#a78578
+	color: #a78578
 }
 
 .transaction_button {
 	position: absolute;
-    display: block;
-	width:17%;
-	bottom: 2%; left: 2%;
+	display: block;
+	width: 17%;
+	bottom: 2%;
+	left: 2%;
 }
 
 .body_header {
-    position: absolute;
-    top: 0; right: 0; left: 0;
-    display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	display: block;
 }
 
 .body_form {
-    position: absolute;
-    top: 5.5%; right: 1%; bottom: 0; left: 1%;
-    display: block;
+	position: absolute;
+	top: 5.5%;
+	right: 1%;
+	bottom: 0;
+	left: 1%;
+	display: block;
 }
-
-
-
-
-
-
