@@ -165,16 +165,17 @@ public class CustomerBean {
 				"Customer with ID '" + paddedCustomerId() + "' already exists", "Error!"));
 	}
 
-	public String viewCustomerDetails(String padded_customer_number) {
-		int customer_number = Integer.parseInt(padded_customer_number);
-
-		setCustomerBean(CustomerDao.getCustomer(customer_number));
+	public String viewCustomerDetails() {
+		setCustomerBean(CustomerDao.getCustomer(customerId));
 
 		return "customer_details";
 	}
+	
+	public void setCustomer(String padded_customer_number) {
+		customerId = Integer.parseInt(padded_customer_number);
+	}
 
 	private void setCustomerBean(Customer customer) {
-		customerId = Integer.parseInt(customer.getCustomer_id());
 		firstName = customer.getCustomer_first_name();
 		middleName = customer.getCustomer_middle_name();
 		lastName = customer.getCustomer_last_name();
