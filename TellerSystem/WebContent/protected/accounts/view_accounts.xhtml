@@ -20,53 +20,48 @@
 
 	<ui:define name="content">
 		<h3 style="text-align: center">Account List</h3>
+		
+		<b:row class="body_form">
+			<h:form class="body_form">
+				<b:dataTable value="#{accountBean.accountList}"
+					var="account" select="true"
+					onselect='ajax:accountBean.setAccount(account.account_id)};'>
 
-		<h:form>
-			<b:dataTable value="#{accountBean.accountList}" var="account">
+					<b:dataTableColumn value="#{account.account_id}"
+						label="Account Number" order="asc"
+						header-style-class='table_header'
+						content-style-class='table_content' />
 
-				<b:dataTableColumn value="#{account.account_id}"
-					label="Account Number" order="asc"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
+					<b:dataTableColumn value="#{account.customer_name}"
+						label="Account Owner" header-style-class='table_header'
+						content-style-class='table_content' />
 
-				<b:dataTableColumn value="#{account.customer_name}"
-					label="Account Owner"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
+					<b:dataTableColumn
+						value="#{accountBean.typeName(account.account_type)}"
+						label="Account Type" header-style-class='table_header'
+						content-style-class='table_content' />
+						
+					<b:dataTableColumn value="#{accountBean.toCurrencyFormat(account.balance)}"
+						label="Balance" header-style-class='table_header'
+						content-style-class='table_content' />
 
-				<b:dataTableColumn
-					value="#{accountBean.typeName(account.account_type)}"
-					label="Account Type"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
+					<b:dataTableColumn
+						value="#{account.balanceStatus}"
+						label="Status" header-style-class='table_header'
+						content-style-class='table_content' />
 
-				<b:dataTableColumn
-					value="#{accountBean.toCurrencyFormat(account.balance)}"
-					label="Balance"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
-					
-				<b:dataTableColumn
-					value="#{account.balanceStatus}"
-					label="Status"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
+					<b:dataTableColumn
+						value="#{account.date_created}"
+						label="Date Created" header-style-class='table_header'
+						content-style-class='table_content' />
 
-				<b:dataTableColumn value="#{account.date_created}"
-					label="Date Created"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
+				</b:dataTable>
 
-				<b:dataTableColumn label="View"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578'>
+				<b:commandButton value="View Details" look="info" action="#{accountBean.viewAccountDetails()}"
+					style-class="transaction_button" />
 
-					<h:commandLink value="Details"
-						action="#{accountBean.viewAccountDetails(account.account_id)}" />
-
-				</b:dataTableColumn>
-			</b:dataTable>
-		</h:form>
+			</h:form>
+		</b:row>
 
 	</ui:define>
 </ui:composition>

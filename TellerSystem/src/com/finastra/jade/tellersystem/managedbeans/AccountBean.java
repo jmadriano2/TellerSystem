@@ -200,18 +200,22 @@ public class AccountBean {
 				"The account with ID '" + accountId + "' already exists", "Error!"));
 	}
 
-	public String viewAccountDetails(String viewed_account) {
+	public String viewAccountDetails() {
 
-		Account account = AccountDao.getAccount(viewed_account);
+		Account account = AccountDao.getAccount(accountId);
 		account.toString();
 		setAccountBean(account);
-		balance = LedgerDao.getBalance(viewed_account);
+		balance = LedgerDao.getBalance(accountId);
 
 		return "account_details";
 	}
+	
+	public void setAccount(String viewed_account) {
+		accountId = viewed_account;
+		System.out.println("You have set account to " + accountId);
+	}
 
 	private void setAccountBean(Account account) {
-		accountId = account.getAccount_id();
 		type = account.getAccount_type();
 		overdraft = account.getAccount_overdraft();
 		currency = account.getAccount_currency();

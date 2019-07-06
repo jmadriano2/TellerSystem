@@ -173,6 +173,7 @@ public class CustomerBean {
 	
 	public void setCustomer(String padded_customer_number) {
 		customerId = Integer.parseInt(padded_customer_number);
+		System.out.println("You have set customer to " + customerId);
 	}
 
 	private void setCustomerBean(Customer customer) {
