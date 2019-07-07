@@ -206,7 +206,7 @@ public class AccountBean {
 		return "account_details";
 	}
 	
-	public void setAccount(String viewed_account, String fullName) {
+	public void setAccount(String viewed_account) {
 		accountId = viewed_account;
 		System.out.println("You have set account to " + accountId);
 	}

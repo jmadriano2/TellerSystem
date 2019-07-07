@@ -20,44 +20,83 @@
 
 	<ui:define name="content">
 		<h2>Transaction Details</h2>
+		<b:row>
+			<b:column col-md="4">
+				<b:form horizontal="true">
+					<b:inputText labelColMd="6" colMd="6" label="Transaction Type"
+						readonly="true" value="#{transactionBean.getTransactionType()}" />
 
-		<b:form horizontal="true">
-		
-			<b:inputText labelColMd="2" colMd="2"
-				label="Transaction Type" readonly="true"
-				value="#{transactionBean.getTransactionType()}" />
-		
-			<b:inputText labelColMd="2" colMd="2"
-				label="Account Number" readonly="true"
-				value="#{transactionBean.accountNumber}" />
-		
-			<b:inputText labelColMd="2" colMd="2"
-				label="Balance on Transaction" readonly="true"
-				value="#{transactionBean.getTransactionBalance()}" />
-				
-			<b:inputText labelColMd="2" colMd="2" maxlength="2"
-				label="Transaction Amount" value="#{transactionBean.getTransactionAmount()}" readonly="true" />
+					<b:inputText labelColMd="6" colMd="6" label="Account Number"
+						readonly="true" value="#{transactionBean.accountNumber}" />
 
-			<b:inputText labelColMd="2" colMd="2"
-				label="Resulting Balance" readonly="true"
-				value="#{transactionBean.getResultBalance()}" />
+					<b:inputText labelColMd="6" colMd="6"
+						label="Balance on Transaction" readonly="true"
+						value="#{transactionBean.getTransactionBalance()}" />
 
-			<b:inputText labelColMd="2" colMd="2" label="Transaction Date | Time" value="#{transactionBean.getTransactionDate()}" 
-               readonly="true"/>
+					<b:inputText labelColMd="6" colMd="6" maxlength="2"
+						label="Transaction Amount"
+						value="#{transactionBean.getTransactionAmount()}" readonly="true" />
 
-			<b:inputText labelColMd="2" colMd="2" label="Trace Number" value="#{transactionBean.getTraceNumber()}" 
-               readonly="true"/>
-               
-			<b:growl />
+					<b:inputText labelColMd="6" colMd="6" label="Resulting Balance"
+						readonly="true" value="#{transactionBean.getResultBalance()}" />
 
-			<b:commandButton value="View All Accounts"
-					action="return_to_view_accounts" look="primary"
-					col-md="2" offset="8" style="width:100%" />
-		</b:form>
+					<b:inputText labelColMd="6" colMd="6"
+						label="Transaction Date | Time"
+						value="#{transactionBean.getTransactionDate()}" readonly="true" />
+
+					<b:inputText labelColMd="6" colMd="6" label="Trace Number"
+						value="#{transactionBean.getTraceNumber()}" readonly="true" />
+
+					<b:inputText colMd="6" readonly="true" style="visibility:hidden;"/>
+
+					<b:commandButton value="View All Accounts" rendered="#{!transactionBean.isTransfer()}"
+						action="return_to_view_accounts" look="primary" col-md="6"
+						offset="8" style="width:100%" />
+				</b:form>
+			</b:column>
+			<b:column col-md="1">
+				<b:form horizontal="true" rendered="#{transactionBean.isTransfer()}">
+					<b:inputText labelColMd="6" colMd="6" style="visibility:hidden;"/>
+
+					<b:inputText labelColMd="12" label=">>>>>>>" style="visibility:hidden;" label-style="text-align:center;"/>
+				</b:form>
+			</b:column>
+			<b:column col-md="4">
+				<b:form horizontal="true" rendered="#{transactionBean.isTransfer()}">
+					<b:inputText labelColMd="6" colMd="6" label="Recipient Details:" style="visibility:hidden;"
+						readonly="true" value="#{transactionBean.getTransactionType()}" label-style="text-align:left;" />
+
+					<b:inputText colMd="6"
+						readonly="true" value="#{transactionBean.recipientNumber}" />
+
+					<b:inputText colMd="6" readonly="true"
+						value="#{transactionBean.getRecipientTransactionBalance()}" />
+
+					<b:inputText colMd="6" maxlength="2"
+						value="#{transactionBean.getTransactionAmount()}" readonly="true" />
+
+					<b:inputText colMd="6"
+						readonly="true" value="#{transactionBean.getRecipientResultBalance()}" />
+
+					<b:inputText colMd="6" style="visibility:hidden;"
+						value="#{transactionBean.getTransactionDate()}" readonly="true" />
+
+					<b:inputText colMd="6" style="visibility:hidden;"
+						value="#{transactionBean.getTraceNumber()}" readonly="true" />
+
+					<b:inputText colMd="6" style="visibility:hidden;"
+						value="#{transactionBean.getTraceNumber()}" readonly="true" />
+
+					<b:commandButton value="View All Accounts"
+						action="return_to_view_accounts" look="primary" col-md="6"
+						offset="8" style="width:100%" />
+				</b:form>
+			</b:column>
+		</b:row>
 	</ui:define>
-	
+
 	<ui:define name="footer">
 		<ui:include src="/mainFooter.xhtml"></ui:include>
 	</ui:define>
-	
+
 </ui:composition>

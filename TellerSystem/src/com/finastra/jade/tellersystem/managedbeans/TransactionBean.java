@@ -24,11 +24,15 @@ public class TransactionBean {
 
 	private String type;
 	private String accountNumber;
-	private String recipientNumber;
 	private double balanceOnTransaction;
 	private String balanceStatus;
 	private double resultingBalance;
 	private String resultingBalanceStatus;
+	private String recipientNumber;
+	private double recipientBalanceOnTransaction;
+	private String recipientBalanceStatus;
+	private double recipientResultingBalance;
+	private String recipientResultingBalanceStatus;
 	private double amount;
 	private double overdraft;
 	private Date date;
@@ -89,6 +93,14 @@ public class TransactionBean {
 		this.amount = amount;
 	}
 
+	public String getAccountNumberLabel() {
+		System.out.println("The type is " + type);
+		if(type.substring(2).equals("T")) {
+			return "Sender Account Number";
+		}
+		return "Account Number";
+	}
+
 	public String toCurrencyFormat(double amount) {
 		return CustomStringUtils.currencyFormat(amount);
 	}
@@ -105,6 +117,13 @@ public class TransactionBean {
 		traceNumber = transaction.getTraceNumber();
 	}
 
+	private void setRecipient(Transaction transaction) {
+		recipientBalanceOnTransaction = transaction.getTransactionBalance();
+		recipientBalanceStatus = transaction.getTransactionBalanceStatus();
+		recipientResultingBalance = transaction.getResultingBalance();
+		recipientResultingBalanceStatus = transaction.getResultingBalanceStatus();
+	}
+
 	public String getTransactionType() {
 		return CustomStringUtils.parseTransactionType(type);
 	}
@@ -115,6 +134,14 @@ public class TransactionBean {
 
 	public String getResultBalance() {
 		return CustomStringUtils.balanceWithStatus(resultingBalance, resultingBalanceStatus);
+	}
+	
+	public String getRecipientTransactionBalance() {
+		return CustomStringUtils.balanceWithStatus(recipientBalanceOnTransaction, recipientBalanceStatus);
+	}
+	
+	public String getRecipientResultBalance() {
+		return CustomStringUtils.balanceWithStatus(recipientResultingBalance, recipientResultingBalanceStatus);
 	}
 
 	public String getTransactionAmount() {
@@ -128,6 +155,13 @@ public class TransactionBean {
 	public String getTraceNumber() {
 
 		return CustomStringUtils.padSixZeroes(traceNumber);
+	}
+	
+	public boolean isTransfer() {
+		if(type.substring(2).equals("T")) {
+			return true;
+		}
+		return false;
 	}
 
 	public void setTransaction(String account_id, double transactionOverdraft) {
@@ -183,6 +217,7 @@ public class TransactionBean {
 		int traceNumber2 = LedgerDao.creditAccount("CrT", amount, recipientNumber, date);
 
 		setTransactionBean(TransactionDao.getTransaction(traceNumber));
+		setRecipient(TransactionDao.getTransaction(traceNumber2));
 
 		System.out.println("You have successfully transferred " + amount + " " + accountNumber.substring(0, 4)
 				+ "\nfrom " + accountNumber + " to " + recipientNumber);
