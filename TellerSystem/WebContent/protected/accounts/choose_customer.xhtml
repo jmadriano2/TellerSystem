@@ -25,7 +25,7 @@
 			<h:form class="body_form">
 				<b:dataTable value="#{customerBean.customerList}"
 					var="customer" select="true"
-					onselect='ajax:accountBean.setCustomer(account.account_id, customer.customer_full_name)};'>
+					onselect='ajax:accountBean.setCustomer(customer.customer_id, customer.customer_full_name)};'>
 
 					<b:dataTableColumn value="#{customer.customer_id}"
 						label="Customer Number" order="asc"
