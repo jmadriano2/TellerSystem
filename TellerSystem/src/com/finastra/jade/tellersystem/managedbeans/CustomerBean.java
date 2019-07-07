@@ -152,6 +152,16 @@ public class CustomerBean {
 		customerList = CustomerDao.getAllCustomers();
 	}
 
+	private void setCustomerBean(Customer customer) {
+		firstName = customer.getCustomer_first_name();
+		middleName = customer.getCustomer_middle_name();
+		lastName = customer.getCustomer_last_name();
+		address = customer.getCustomer_address();
+		occupation = customer.getCustomer_occupation();
+		description = customer.getCustomer_description();
+		dateJoined = customer.getCustomer_date_joined();
+	}
+
 	public String createCustomer() throws ParseException {
 
 		if (!CustomerDao.exists(customerId)) {
@@ -159,6 +169,7 @@ public class CustomerBean {
 					description, dateJoined)) {
 				customerList = CustomerDao.getAllCustomers();
 				System.out.println("returns create_customer_success");
+				setCustomerBean(CustomerDao.getCustomer(customerId));
 				return "create_customer_success";
 			}
 		} else if (customerId == 0) {
@@ -183,16 +194,6 @@ public class CustomerBean {
 	public void setCustomer(String padded_customer_number) {
 		customerId = Integer.parseInt(padded_customer_number);
 		System.out.println("You have set customer to " + customerId);
-	}
-
-	private void setCustomerBean(Customer customer) {
-		firstName = customer.getCustomer_first_name();
-		middleName = customer.getCustomer_middle_name();
-		lastName = customer.getCustomer_last_name();
-		address = customer.getCustomer_address();
-		occupation = customer.getCustomer_occupation();
-		description = customer.getCustomer_description();
-		dateJoined = customer.getCustomer_date_joined();
 	}
 
 	public String amendCustomer() throws ParseException {

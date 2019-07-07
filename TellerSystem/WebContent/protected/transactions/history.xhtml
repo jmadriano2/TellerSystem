@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	template="/WEB-INF/templates/appTemplate.xhtml">
+
+	<ui:define name="title">View Customers - Jade Teller System</ui:define>
+
+	<ui:define name="custom">
+		<h:outputStylesheet library="css" name="appStyle.css" />
+		<h:outputScript library="js" name="vcenter.js" />
+	</ui:define>
+
+	<ui:define name="header">
+		<ui:include src="/mainHeader.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="content">
+		<h3 style="text-align: center">Transaction History</h3>
+		
+		<b:row class="body_form">
+			<h:form class="body_form">
+				<b:dataTable value="#{transactionBean.transactions}"
+					var="transaction" select="true"
+					onselect='ajax:transactionBean.selectTransaction(transaction.traceNumber, transaction.recipientTraceNumber);'>
+
+					<b:dataTableColumn value="#{transactionBean.getTraceNumber(transaction.traceNumber)}"
+						label="Trace Number"
+						header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn value="#{transactionBean.getTransactionType(transaction.type)}"
+						label="Transaction Type" header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn
+						value="#{transactionBean.getTransactionAmount(transaction.amount)}"
+						label="Amount" header-style-class='table_header'
+						content-style-class='table_content' />
+						
+					<b:dataTableColumn value="#{transaction.accountId}"
+						label="Account Number" header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn
+						value="#{transaction.recipientId}"
+						label="Recipient Account" header-style-class='table_header'
+						content-style-class='table_content' />
+
+					<b:dataTableColumn
+						value="#{transactionBean.getTransactionDate(transaction.transactionDate)}"
+						label="Transaction Date" header-style-class='table_header' data-order="#{transaction.transactionDate}"
+						order="asc" content-style-class='table_content' />
+
+				</b:dataTable>
+
+				<b:commandButton value="View Transaction Details" look="info" action="#{transactionBean.viewTransactionDetails()}"
+					style-class="transaction_button" />
+
+			</h:form>
+		</b:row>
+
+	</ui:define>
+	
+	<ui:define name="footer">
+		<ui:include src="/mainFooter.xhtml"></ui:include>
+	</ui:define>
+	
+</ui:composition>

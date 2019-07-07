@@ -22,10 +22,9 @@ public class LedgerDao {
 		try {
 			conn = DataConnect.getConnection();
 			stmt = conn.prepareStatement(
-					"INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, entry_balance_status, account_id) VALUES ('CrD',?,?,'Credit',?)");
+					"INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, entry_balance_status, account_id) VALUES ('CrD', ?, 0,'Credit', ?)");
 			stmt.setDouble(1, entryAmount);
-			stmt.setDouble(2, entryAmount);
-			stmt.setString(3, accountId);
+			stmt.setString(2, accountId);
 			i = stmt.executeUpdate();
 
 			System.out.println("Deposited " + entryAmount + " to account '" + accountId + "' Successfully\ni: " + i);
@@ -120,10 +119,11 @@ public class LedgerDao {
 		PreparedStatement creditAccount = null;
 		int debitTraceNumber = 0, creditTraceNumber = 0;
 
-		String debitString = "INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, "
-				+ "entry_balance_status, entry_date, recipient_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		String creditString = "INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, "
 				+ "entry_balance_status, entry_date, account_id) VALUES (?, ?, ?, ?, ?, ?)";
+		
+		String debitString = "INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, "
+				+ "entry_balance_status, entry_date, recipient_entry_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		Date date = new Date();
 
@@ -137,17 +137,8 @@ public class LedgerDao {
 			System.out.println("I am inside the try block of transferFunds");
 
 			conn.setAutoCommit(false);
-			debitAccount = conn.prepareStatement(debitString, Statement.RETURN_GENERATED_KEYS);
 			creditAccount = conn.prepareStatement(creditString, Statement.RETURN_GENERATED_KEYS);
-
-			debitAccount.setString(1, "DrT");
-			debitAccount.setDouble(2, amount);
-			Balance senderBalance = getBalance(senderAccount);
-			debitAccount.setDouble(3, senderBalance.getBalance());
-			debitAccount.setString(4, senderBalance.getBalanceStatus());
-			debitAccount.setTimestamp(5, timestamp);
-			debitAccount.setString(6, recipientAccount);
-			debitAccount.setString(7, senderAccount);
+			debitAccount = conn.prepareStatement(debitString, Statement.RETURN_GENERATED_KEYS);
 
 			creditAccount.setString(1, "CrT");
 			creditAccount.setDouble(2, amount);
@@ -156,22 +147,31 @@ public class LedgerDao {
 			creditAccount.setString(4, recipientBalance.getBalanceStatus());
 			creditAccount.setTimestamp(5, timestamp);
 			creditAccount.setString(6, recipientAccount);
-
+			
+			int j = creditAccount.executeUpdate();
+			System.out.println("Credited " + amount + " from account '" + recipientAccount + "' Successfully j: " + j);
+			
+			ResultSet credit = creditAccount.getGeneratedKeys();
+			if (credit.next())
+				creditTraceNumber = credit.getInt(1);
+			System.out.println("The Credit Trace Number inside fundsTransfer is " + creditTraceNumber);
+			
+			debitAccount.setString(1, "DrT");
+			debitAccount.setDouble(2, amount);
+			Balance senderBalance = getBalance(senderAccount);
+			debitAccount.setDouble(3, senderBalance.getBalance());
+			debitAccount.setString(4, senderBalance.getBalanceStatus());
+			debitAccount.setTimestamp(5, timestamp);
+			debitAccount.setInt(6, creditTraceNumber);
+			debitAccount.setString(7, senderAccount);
+			
 			int i = debitAccount.executeUpdate();
 			System.out.println("Debited " + amount + " from account '" + senderAccount + "' Successfully i: " + i);
-
-			int j = creditAccount.executeUpdate();
-			System.out.println("Credited " + amount + " from account '" + recipientAccount + "' Successfully i: " + j);
 
 			ResultSet debit = debitAccount.getGeneratedKeys();
 			if (debit.next())
 				debitTraceNumber = debit.getInt(1);
 			System.out.println("The Debit Trace Number inside fundsTransfer is " + debitTraceNumber);
-			
-			ResultSet credit = creditAccount.getGeneratedKeys();
-			if (credit.next())
-				creditTraceNumber = credit.getInt(1);
-			System.out.println("The Credit Trace Number inside fundsTransfer is " + creditTraceNumber);	
 
 		} catch (SQLException e) {
 			e.printStackTrace();

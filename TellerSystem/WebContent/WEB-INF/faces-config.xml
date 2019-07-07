@@ -44,6 +44,11 @@
 			<to-view-id>/protected/transactions.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>history</from-outcome>
+			<to-view-id>/protected/transactions/history.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
@@ -236,6 +241,24 @@
 		<from-view-id>/protected/transactions/transfer.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>transfer_success</from-outcome>
+			<to-view-id>/protected/transactions/transaction_details.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/transaction_details.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>view_all_transactions</from-outcome>
+			<to-view-id>/protected/transactions/history.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/protected/transactions/history.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>view_transaction_details</from-outcome>
 			<to-view-id>/protected/transactions/transaction_details.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>

@@ -40,34 +40,38 @@
 					<b:inputText labelColMd="6" colMd="6" label="Resulting Balance"
 						readonly="true" value="#{transactionBean.getResultBalance()}" />
 
-					<b:inputText labelColMd="6" colMd="6"
-						label="Transaction Date"
+					<b:inputText labelColMd="6" colMd="6" label="Transaction Date"
 						value="#{transactionBean.getTransactionDate()}" readonly="true" />
 
 					<b:inputText labelColMd="6" colMd="6" label="Trace Number"
 						value="#{transactionBean.getTraceNumber()}" readonly="true" />
 
-					<b:inputText colMd="6" readonly="true" style="visibility:hidden;"/>
+					<b:inputText colMd="6" readonly="true" style="visibility:hidden;" />
 
-					<b:commandButton value="View All Transactions" rendered="#{!transactionBean.isTransfer()}"
-						action="return_to_view_accounts" look="primary" col-md="6"
+					<b:commandButton value="View All Transactions"
+						rendered="#{!transactionBean.isTransfer()}"
+						actionListener="#{transactionBean.resetTransactionBean()}"
+						action="view_all_transactions" look="primary" col-md="6"
 						offset="8" style="width:100%" />
 				</b:form>
 			</b:column>
 			<b:column col-md="1">
 				<b:form horizontal="true" rendered="#{transactionBean.isTransfer()}">
-					<b:inputText labelColMd="6" colMd="6" style="visibility:hidden;"/>
+					<b:inputText labelColMd="6" colMd="6" style="visibility:hidden;" />
 
-					<b:inputText labelColMd="12" label=">>>>>>>" style="visibility:hidden;" label-style="text-align:center;"/>
+					<b:inputText labelColMd="12" label=">>>>>>>"
+						style="visibility:hidden;" label-style="text-align:center;" />
 				</b:form>
 			</b:column>
 			<b:column col-md="4">
 				<b:form horizontal="true" rendered="#{transactionBean.isTransfer()}">
-					<b:inputText labelColMd="6" colMd="6" label="Recipient Details:" style="visibility:hidden;"
-						readonly="true" value="#{transactionBean.getTransactionType()}" label-style="text-align:left;" />
+					<b:inputText labelColMd="6" colMd="6" label="Recipient Details:"
+						style="visibility:hidden;" readonly="true"
+						value="#{transactionBean.getTransactionType()}"
+						label-style="text-align:left;" />
 
-					<b:inputText colMd="6"
-						readonly="true" value="#{transactionBean.recipientNumber}" />
+					<b:inputText colMd="6" readonly="true"
+						value="#{transactionBean.recipientNumber}" />
 
 					<b:inputText colMd="6" readonly="true"
 						value="#{transactionBean.getRecipientTransactionBalance()}" />
@@ -75,8 +79,8 @@
 					<b:inputText colMd="6" maxlength="2"
 						value="#{transactionBean.getTransactionAmount()}" readonly="true" />
 
-					<b:inputText colMd="6"
-						readonly="true" value="#{transactionBean.getRecipientResultBalance()}" />
+					<b:inputText colMd="6" readonly="true"
+						value="#{transactionBean.getRecipientResultBalance()}" />
 
 					<b:inputText colMd="6" style="visibility:hidden;"
 						value="#{transactionBean.getTransactionDate()}" readonly="true" />
@@ -88,7 +92,8 @@
 						value="#{transactionBean.getTraceNumber()}" readonly="true" />
 
 					<b:commandButton value="View All Transactions"
-						action="return_to_view_accounts" look="primary" col-md="6"
+						actionListener="#{transactionBean.resetTransactionBean()}"
+						action="view_all_transactions" look="primary" col-md="6"
 						offset="8" style="width:100%" />
 				</b:form>
 			</b:column>

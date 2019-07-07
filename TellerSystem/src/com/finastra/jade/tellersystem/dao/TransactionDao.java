@@ -108,8 +108,9 @@ public class TransactionDao {
 
 		try {
 			con = DataConnect.getConnection();
-			ps = con.prepareStatement("SELECT entry_id, entry_type, entry_amount, entry_date, recipient_id, account_id "
-					+ "FROM ledger_entry WHERE entry_type IN ('CrD', 'DrW', 'DrT')");
+			ps = con.prepareStatement(
+					"SELECT entry_id, entry_type, entry_amount, entry_date, recipient_entry_id, account_id "
+							+ "FROM ledger_entry WHERE entry_type IN ('CrD', 'DrW', 'DrT')");
 
 			ResultSet rs = ps.executeQuery();
 
@@ -118,14 +119,22 @@ public class TransactionDao {
 				String type = rs.getString("entry_type");
 				double amount = rs.getDouble("entry_amount");
 				Date date = rs.getTimestamp("entry_date");
-				String recipientId = rs.getString("recipient_id");
+				int recipientEntryId = rs.getInt("recipient_entry_id");
 				if (rs.wasNull()) {
+					recipientEntryId = -1;
+				}
+				String recipientId;
+				if (recipientEntryId >= 0) {
+					recipientId = getAccountNumber(recipientEntryId);
+				} else {
 					recipientId = "---";
 				}
 				String accountId = rs.getString("account_id");
 
-				transactions
-						.add(new Transaction(traceNumber, type, amount, date, recipientId, accountId));
+				transactions.add(
+						new Transaction(traceNumber, recipientEntryId, type, amount, date, recipientId, accountId));
+
+				transactions.get(transactions.size() - 1).toString();
 			}
 		} catch (SQLException ex) {
 			System.out.println("Login error -->" + ex.getMessage());
@@ -133,6 +142,32 @@ public class TransactionDao {
 			DataConnect.close(con);
 		}
 		return transactions;
+	}
+
+	private static String getAccountNumber(int recipientTraceNumber) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String accountNumber = "";
+
+		try {
+			con = DataConnect.getConnection();
+			ps = con.prepareStatement("SELECT account_id FROM ledger_entry WHERE entry_id=?");
+
+			ps.setInt(1, recipientTraceNumber);
+
+			ResultSet rs = ps.executeQuery();
+
+			rs.next();
+			accountNumber = rs.getString("account_id");
+
+		} catch (
+
+		SQLException ex) {
+			System.out.println("Login error -->" + ex.getMessage());
+		} finally {
+			DataConnect.close(con);
+		}
+		return accountNumber;
 	}
 
 	public static Transaction getTransaction(int traceNumber) {

@@ -1,5 +1,6 @@
 package com.finastra.jade.tellersystem.managedbeans;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -130,11 +131,11 @@ public class AccountBean {
 	public String toCurrencyFormat(double amount) {
 		return CustomStringUtils.currencyFormat(amount);
 	}
-	
+
 	public String getFormattedDate() {
 		return CustomStringUtils.formatDate(dateCreated);
 	}
-	
+
 	public String getFormattedDate(Date date) {
 		return CustomStringUtils.formatDate(date);
 	}
@@ -166,11 +167,11 @@ public class AccountBean {
 	}
 
 	public String createAccountForm() {
-		if(customerId==0) {
+		if (customerId == 0) {
 			CustomMessageUtils.showWarning("Please choose a customer");
 			return "#";
 		}
-		
+
 		type = "S";
 
 		return "create_account";
@@ -180,13 +181,17 @@ public class AccountBean {
 		String paddedCustomerId = paddedCustomerId();
 		String paddedAccountSequence = paddedAccountSequence();
 		accountId = currency + paddedCustomerId + type + paddedAccountSequence;
+		Timestamp timestamp = new Timestamp(new Date().getTime());
 		System.out.println("Account ID: " + accountId + "\nCustomer ID: " + customerId);
 
 		if (!AccountDao.exists(accountId)) {
-			if (AccountDao.insertAccount(accountId, type, currency, sequence, overdraft, customerId, initialDeposit)) {
+			if (AccountDao.insertAccount(accountId, type, currency, sequence, overdraft, customerId, initialDeposit,
+					timestamp)) {
 				System.out.println("returns create_account_success");
+
 				accountList = AccountDao.getAllAccounts();
 
+				dateCreated = timestamp;
 				balance = LedgerDao.getBalance(accountId);
 
 				return "create_account_success";
@@ -201,16 +206,15 @@ public class AccountBean {
 		Account account = AccountDao.getAccount(accountId);
 		account.toString();
 		setAccountBean(account);
-		balance = LedgerDao.getBalance(accountId);
 
 		return "account_details";
 	}
-	
+
 	public void setAccount(String viewed_account) {
 		accountId = viewed_account;
 		System.out.println("You have set account to " + accountId);
 	}
-	
+
 	public void setCustomer(int customerNumber, String fullName) {
 		customerId = customerNumber;
 		customerName = fullName;
@@ -225,6 +229,7 @@ public class AccountBean {
 		dateCreated = account.getDate_created();
 		customerId = account.getCustomer_id();
 		customerName = account.getCustomer_name();
+		balance = LedgerDao.getBalance(account.getAccount_id());
 	}
 
 }

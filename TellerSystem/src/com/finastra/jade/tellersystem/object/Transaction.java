@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Transaction {
 	private int traceNumber;
+	private int recipientTraceNumber;
 	private String type;
 	private double amount;
 	private double transactionBalance;
@@ -11,12 +12,8 @@ public class Transaction {
 	private double resultingBalance;
 	private String resultingBalanceStatus;
 	private Date transactionDate;
+	private String recipientId;
 	private String accountId;
-	private String recipient;
-
-	public int getTraceNumber() {
-		return traceNumber;
-	}
 
 	public Transaction(int traceNumber, String type, double amount, double transactionBalance,
 			String transactionBalanceStatus, double resultingBalance, String resultingBalanceStatus,
@@ -32,8 +29,31 @@ public class Transaction {
 		this.accountId = accountId;
 	}
 
+	public Transaction(int traceNumber, int recipientTraceNumber, String type, double amount, Date transactionDate, String recipientId,
+			String accountId) {
+		this.traceNumber = traceNumber;
+		this.recipientTraceNumber = recipientTraceNumber;
+		this.type = type;
+		this.amount = amount;
+		this.transactionDate = transactionDate;
+		this.recipientId = recipientId;
+		this.accountId = accountId;
+	}
+
+	public int getTraceNumber() {
+		return traceNumber;
+	}
+
 	public void setTraceNumber(int traceNumber) {
 		this.traceNumber = traceNumber;
+	}
+
+	public int getRecipientTraceNumber() {
+		return recipientTraceNumber;
+	}
+
+	public void setRecipientTraceNumber(int recipientTraceNumber) {
+		this.recipientTraceNumber = recipientTraceNumber;
 	}
 
 	public String getType() {
@@ -52,12 +72,12 @@ public class Transaction {
 		this.accountId = accountId;
 	}
 
-	public String getRecipient() {
-		return recipient;
+	public String getRecipientId() {
+		return recipientId;
 	}
 
-	public void setRecipient(String recipient) {
-		this.recipient = recipient;
+	public void setRecipientId(String recipientId) {
+		this.recipientId = recipientId;
 	}
 
 	public double getTransactionBalance() {
@@ -115,4 +135,12 @@ public class Transaction {
 	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Transaction [traceNumber=" + traceNumber + ", type=" + type + ", amount=" + amount
+				+ ", transactionDate=" + transactionDate + ", recipientId=" + recipientId + ", accountId=" + accountId
+				+ "]";
+	}
+
 }

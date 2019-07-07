@@ -38,8 +38,8 @@
 		<b:column col-md="2" offset="2">
 			<h:link outcome="transactions">
 				<b:well style-class="homeButton">
-					<b:image library="img" name="transaction_icon.png" tooltip="Transactions"
-						class="buttonIcon" />
+					<b:image library="img" name="transaction_icon.png"
+						tooltip="Transactions" class="buttonIcon" />
 				</b:well>
 			</h:link>
 		</b:column>
@@ -52,17 +52,20 @@
 			</h:link>
 		</b:column>
 		<b:column col-md="2" offset="2">
-			<h:link>
-				<b:well style-class="homeButton">
-					<b:image library="img" name="history_icon.png" tooltip="History"
-						class="buttonIcon" />
-				</b:well>
-			</h:link>
+			<h:form>
+				<h:commandLink action="history"
+					actionListener="#{transactionBean.resetTransactionBean()}">
+					<b:well style-class="homeButton">
+						<b:image library="img" name="history_icon.png" tooltip="History"
+							class="buttonIcon" />
+					</b:well>
+				</h:commandLink>
+			</h:form>
 		</b:column>
 	</ui:define>
-	
+
 	<ui:define name="footer">
 		<ui:include src="/mainFooter.xhtml"></ui:include>
 	</ui:define>
-	
+
 </ui:composition>

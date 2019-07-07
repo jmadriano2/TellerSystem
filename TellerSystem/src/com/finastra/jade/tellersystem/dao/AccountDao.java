@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,20 +17,21 @@ import com.finastra.jade.tellersystem.util.DataConnect;
 public class AccountDao {
 
 	public static boolean insertAccount(String accountId, String type, String currency, int sequence, double overdraft,
-			int customerId, double initialDeposit) {
+			int customerId, double initialDeposit, Timestamp timestamp) {
 		int i = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		try {
 			conn = DataConnect.getConnection();
-			stmt = conn.prepareStatement("INSERT INTO account values (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)");
+			stmt = conn.prepareStatement("INSERT INTO account values (?, ?, ?, ?, ?, ?, ?)");
 			stmt.setString(1, accountId);
 			stmt.setString(2, type);
 			stmt.setString(3, currency);
 			stmt.setInt(4, sequence);
 			stmt.setDouble(5, overdraft);
-			stmt.setInt(6, customerId);
+			stmt.setTimestamp(6, timestamp);
+			stmt.setInt(7, customerId);
 			System.out.println(customerId);
 			i = stmt.executeUpdate();
 

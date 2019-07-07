@@ -1,7 +1,6 @@
 package com.finastra.jade.tellersystem.managedbeans;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import com.finastra.jade.tellersystem.util.CustomStringUtils;
 public class TransactionBean {
 	private List<TransactionAccount> transactionAccounts;
 	private List<TransactionAccount> recipientAccounts;
+	private List<Transaction> transactions;
 
 	private String type;
 	private String accountNumber;
@@ -39,6 +39,7 @@ public class TransactionBean {
 	private double overdraft;
 	private Date date;
 	private int traceNumber;
+	private int recipientTraceNumber;
 
 	public TransactionBean() {
 	}
@@ -46,11 +47,13 @@ public class TransactionBean {
 	@PostConstruct
 	public void init() {
 		transactionAccounts = TransactionDao.getAllTransactionAccounts();
+		transactions = TransactionDao.getAllTransactions();
 	}
 
 	public void resetTransactionBean() {
 		amount = 0;
 		transactionAccounts = TransactionDao.getAllTransactionAccounts();
+		transactions = TransactionDao.getAllTransactions();
 	}
 
 	public void resetRecipientAccounts() {
@@ -65,6 +68,14 @@ public class TransactionBean {
 
 	public List<TransactionAccount> getTransactionAccounts() {
 		return transactionAccounts;
+	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	public void setTransactionAccounts(List<TransactionAccount> transactionAccounts) {
@@ -120,6 +131,7 @@ public class TransactionBean {
 	}
 
 	private void setRecipient(Transaction transaction) {
+		recipientNumber = transaction.getAccountId();
 		recipientBalanceOnTransaction = transaction.getTransactionBalance();
 		recipientBalanceStatus = transaction.getTransactionBalanceStatus();
 		recipientResultingBalance = transaction.getResultingBalance();
@@ -127,6 +139,10 @@ public class TransactionBean {
 	}
 
 	public String getTransactionType() {
+		return CustomStringUtils.parseTransactionType(type);
+	}
+
+	public String getTransactionType(String type) {
 		return CustomStringUtils.parseTransactionType(type);
 	}
 
@@ -150,12 +166,23 @@ public class TransactionBean {
 		return CustomStringUtils.currencyFormat(amount);
 	}
 
+	public String getTransactionAmount(double amount) {
+		return CustomStringUtils.currencyFormat(amount);
+	}
+
 	public String getTransactionDate() {
 		return CustomStringUtils.formatDate(date);
 	}
 
-	public String getTraceNumber() {
+	public String getTransactionDate(Date date) {
+		return CustomStringUtils.formatDate(date);
+	}
 
+	public String getTraceNumber() {
+		return CustomStringUtils.padSixZeroes(traceNumber);
+	}
+
+	public String getTraceNumber(int traceNumber) {
 		return CustomStringUtils.padSixZeroes(traceNumber);
 	}
 
@@ -164,6 +191,14 @@ public class TransactionBean {
 			return true;
 		}
 		return false;
+	}
+
+	public void selectTransaction(int selectedTraceNumber, int selectedRecipientTraceNumber) {
+		traceNumber = selectedTraceNumber;
+		recipientTraceNumber = selectedRecipientTraceNumber;
+
+		System.out.println("You have set the traceNumber to " + traceNumber + " and recipientTraceNumber to "
+				+ recipientTraceNumber);
 	}
 
 	public void setTransaction(String account_id, double transactionOverdraft) {
@@ -213,7 +248,7 @@ public class TransactionBean {
 
 		// inserts new transaction and returns generated ids
 		String[] traceNumbers = LedgerDao.transferFunds(accountNumber, recipientNumber, amount).split(",");
-		
+
 		System.out.println("Debit Trace Number: " + traceNumbers[0] + "\nCredit Trace Number: " + traceNumbers[1]);
 
 		setTransactionBean(TransactionDao.getTransaction(Integer.parseInt(traceNumbers[0])));
@@ -223,6 +258,15 @@ public class TransactionBean {
 				+ "\nfrom " + accountNumber + " to " + recipientNumber);
 
 		return "transfer_success";
+	}
+
+	public String viewTransactionDetails() {
+		setTransactionBean(TransactionDao.getTransaction(traceNumber));
+		if(recipientTraceNumber >= 0) {			
+			setRecipient(TransactionDao.getTransaction(recipientTraceNumber));
+		}
+
+		return "view_transaction_details";
 	}
 
 	private boolean zeroAmount() {
