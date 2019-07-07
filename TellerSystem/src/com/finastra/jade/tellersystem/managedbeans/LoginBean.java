@@ -1,5 +1,8 @@
 package com.finastra.jade.tellersystem.managedbeans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -15,6 +18,7 @@ public class LoginBean {
 	private int userId;
 	private String username;
 	private String password;
+	private String systemDate;
 
 	public LoginBean() {
 	}
@@ -43,6 +47,14 @@ public class LoginBean {
 		this.password = password;
 	}
 
+	public String getSystemDate() {
+		return systemDate;
+	}
+
+	public void setSystemDate(String systemDate) {
+		this.systemDate = systemDate;
+	}
+
 	public String login() {
 		boolean valid = LoginDao.validate(username, password);
 		if (valid) {
@@ -50,6 +62,10 @@ public class LoginBean {
 			session.setAttribute("username", username);
 			session.setAttribute("userId", LoginDao.getTellerId(username, password));
 			System.out.println(session.getAttribute("userId"));
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM, yyyy");
+			systemDate = simpleDateFormat.format(new Date());
+			
 			return "login";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,

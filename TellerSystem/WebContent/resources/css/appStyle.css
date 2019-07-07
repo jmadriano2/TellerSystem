@@ -70,6 +70,8 @@ body {
 .main_body {
 	position: relative;
 	height: 85%;
+	padding-left: 1%;
+	padding-right: 1%;
 	margin-left: 0px !important;
 	margin-right: 0px !important;
 	/*background: blue;*/
@@ -77,7 +79,18 @@ body {
 
 .main_footer {
 	height: 5%;
+	width: 100% !important;
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+	padding: 0.5%;
+	border-top: 4px solid #d7b2f0 !important;
+	text-align: right !important;
 	/*background: green;*/
+}
+
+.footer_content {
+	margin: 0;
+	font-weight: bold !important;
 }
 
 .login {
