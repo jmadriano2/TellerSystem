@@ -92,6 +92,7 @@ CREATE TABLE `ledger_entry` (
   `entry_balance` DECIMAL(26,5) NOT NULL,
   `entry_balance_status` varchar(6) NOT NULL,
   `entry_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `recipient_id` varchar(12),
   `account_id` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
