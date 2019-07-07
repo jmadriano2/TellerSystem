@@ -133,11 +133,11 @@ public class AccountBean {
 	}
 
 	public String getFormattedDate() {
-		return CustomStringUtils.formatDate(dateCreated);
+		return CustomStringUtils.formatDateTime(dateCreated);
 	}
 
 	public String getFormattedDate(Date date) {
-		return CustomStringUtils.formatDate(date);
+		return CustomStringUtils.formatDateTime(date);
 	}
 
 	public void resetAccountBean() {

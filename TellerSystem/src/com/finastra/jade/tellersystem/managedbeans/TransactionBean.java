@@ -176,11 +176,11 @@ public class TransactionBean {
 	}
 
 	public String getTransactionDate() {
-		return CustomStringUtils.formatDate(date);
+		return CustomStringUtils.formatDateTime(date);
 	}
 
 	public String getTransactionDate(Date date) {
-		return CustomStringUtils.formatDate(date);
+		return CustomStringUtils.formatDateTime(date);
 	}
 
 	public String getTraceNumber() {

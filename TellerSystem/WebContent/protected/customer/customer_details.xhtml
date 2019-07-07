@@ -23,43 +23,57 @@
 
 		<b:form horizontal="true">
 
-			<b:inputText labelColMd="2" colMd="3"
-				label="Customer Number" readonly="true"
-				value="#{customerBean.paddedCustomerId()}" />
-			<b:inputText labelColMd="2" colMd="3" readonly="true"
+			<b:inputText labelColMd="2" colMd="1" label="Customer Number"
+				readonly="true" value="#{customerBean.paddedCustomerId()}" />
+
+			<b:inputText labelColMd="2" colMd="2" readonly="true"
 				label="First Name" value="#{customerBean.firstName}" />
-			<b:inputText labelColMd="2" colMd="3" readonly="true"
+
+			<b:inputText labelColMd="2" colMd="2" readonly="true"
 				label="Middle Name" value="#{customerBean.middleName}" />
-			<b:inputText labelColMd="2" colMd="3" readonly="true"
+
+			<b:inputText labelColMd="2" colMd="2" readonly="true"
 				label="Last Name" value="#{customerBean.lastName}"
 				required-message="The field 'Last Name' must not be empty" />
-			<b:inputText labelColMd="2" colMd="6" readonly="true"
-				label="Address" value="#{customerBean.address}"
+
+			<b:inputText labelColMd="2" colMd="2" label="Birthday"
+				value="#{customerBean.getFormattedBirthday()}" readonly="true" />
+
+			<b:inputText labelColMd="2" colMd="1" label="Sex"
+				value="#{customerBean.getParsedSex()}" readonly="true" />
+
+			<b:inputText labelColMd="2" colMd="1" label="Civil Status"
+				value="#{customerBean.civilStatus}" readonly="true" />
+
+			<b:inputText labelColMd="2" colMd="4" readonly="true" label="Address"
+				value="#{customerBean.address}"
 				required-message="The field 'Adress' must not be empty" />
-			<b:inputText labelColMd="2" colMd="3" readonly="true"
+
+			<b:inputText labelColMd="2" colMd="2" readonly="true"
 				label="Occupation" value="#{customerBean.occupation}" />
+
+			<b:inputText labelColMd="2" colMd="2" readonly="true"
+				label="Date Joined" value="#{customerBean.getFormattedDate()}" />
+
+			<b:inputTextarea labelColMd="2" colMd="4" readonly="true"
+				label="Description" value="#{customerBean.description}" rows="2" />
+
 			<b:growl />
 
-			<b:inputText labelColMd="2" colMd="3" readonly="true"
-				label="Date Joined" value="#{customerBean.getFormattedDate()}"/>
-			<b:inputTextarea labelColMd="2" colMd="4"
-				readonly="true" label="Description"
-				value="#{customerBean.description}" rows="2" />
 			<b:row>
 				<b:commandButton value="View All Customers"
-					action="return_to_view_customers" look="primary"
-					col-md="2" offset="6" style="width:100%" />
+					action="return_to_view_customers" look="primary" col-md="2"
+					offset="6" style="width:100%" />
 
-				<b:commandButton value="Amend"
-					action="amend_customer" look="success"
-					col-md="2" style="width:100%" />
+				<b:commandButton value="Amend" action="amend_customer"
+					look="success" col-md="2" style="width:100%" />
 			</b:row>
 
 		</b:form>
 	</ui:define>
-	
+
 	<ui:define name="footer">
 		<ui:include src="/mainFooter.xhtml"></ui:include>
 	</ui:define>
-	
+
 </ui:composition>

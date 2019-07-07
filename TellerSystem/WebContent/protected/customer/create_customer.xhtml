@@ -23,38 +23,65 @@
 
 		<b:form horizontal="true">
 
-			<b:inputText labelColMd="2" colMd="3" mask="9{6,6}"
-				render-label="true" label="Customer Number" maxlength="6"
+			<b:inputText labelColMd="2" colMd="1" mask="9{6,6}"
+				label="Customer Number" maxlength="6"
 				value="#{customerBean.customerId}" />
-			<b:inputText labelColMd="2" colMd="3" required="true"
+
+			<b:inputText labelColMd="2" colMd="2" required="true"
 				label="First Name" value="#{customerBean.firstName}"
 				required-message="The field 'First Name' must not be empty" />
-			<b:inputText labelColMd="2" colMd="3"
-				label="Middle Name" value="#{customerBean.middleName}" />
-			<b:inputText labelColMd="2" colMd="3" required="true"
-				label="Last Name" value="#{customerBean.lastName}" 
-				required-message="The field 'Last Name' must not be empty" />
-			<b:inputText labelColMd="2" colMd="6" required="true"
-				label="Address" value="#{customerBean.address}" 
-				required-message="The field 'Adress' must not be empty" />
-			<b:inputText labelColMd="2" colMd="3" required="true"
-				label="Occupation" value="#{customerBean.occupation}" 
-				required-message="The field 'Occupation' must not be empty" />
-			<b:growl/>
 
-			<b:dateTimePicker labelColMd="2" colMd="3"
-				label="Date Joined" inline="true" value="#{customerBean.dateJoined}"/>
-			<b:inputTextarea labelColMd="2" colMd="4"
-				label="Description" value="#{customerBean.description}"  rows="2" />
+			<b:inputText labelColMd="2" colMd="2" label="Middle Name"
+				value="#{customerBean.middleName}" />
+
+			<b:inputText labelColMd="2" colMd="2" required="true"
+				label="Last Name" value="#{customerBean.lastName}"
+				required-message="The field 'Last Name' must not be empty" />
+
+			<b:dateTimePicker labelColMd="2" colMd="3" show-time="false"
+				format="DD MMMM, YYYY" required="true" label="Birthday"
+				inline="true" value="#{customerBean.birthday}" />
+
+			<b:selectOneMenu value="#{customerBean.sex}" colMd="1" label="Sex"
+				labelColMd="2" id="sex" update="@form" required="true"
+				onChange="ajax:ajaxBean.onComboboxChange()">
+				<f:selectItem itemLabel="Male" itemValue="M" />
+				<f:selectItem itemLabel="Female" itemValue="F" />
+			</b:selectOneMenu>
+
+			<b:selectOneMenu value="#{customerBean.civilStatus}" colMd="2"
+				required="true" label="Civil Status" labelColMd="2" id="civilStatus"
+				update="@form" onChange="ajax:ajaxBean.onComboboxChange()">
+				<f:selectItem itemLabel="Single" itemValue="Single" />
+				<f:selectItem itemLabel="Married" itemValue="Married" />
+				<f:selectItem itemLabel="Separated" itemValue="Separated" />
+				<f:selectItem itemLabel="Widowed" itemValue="Widowed" />
+			</b:selectOneMenu>
+
+			<b:inputText labelColMd="2" colMd="4" required="true" label="Address"
+				value="#{customerBean.address}"
+				required-message="The field 'Adress' must not be empty" />
+
+			<b:inputText labelColMd="2" colMd="2" required="true"
+				label="Occupation" value="#{customerBean.occupation}"
+				required-message="The field 'Occupation' must not be empty" />
+
+			<b:dateTimePicker labelColMd="2" colMd="3" format="DD MMMM, YYYY"
+				label="Date Joined" inline="true" value="#{customerBean.dateJoined}" />
+
+			<b:inputTextarea labelColMd="2" colMd="4" label="Description"
+				value="#{customerBean.description}" rows="2" />
+
+			<b:growl />
 
 			<b:commandButton value="Submit"
 				action="#{customerBean.createCustomer()}" look="primary" col-md="2"
 				offset="8" style="width:100%" />
 		</b:form>
 	</ui:define>
-	
+
 	<ui:define name="footer">
 		<ui:include src="/mainFooter.xhtml"></ui:include>
 	</ui:define>
-	
+
 </ui:composition>

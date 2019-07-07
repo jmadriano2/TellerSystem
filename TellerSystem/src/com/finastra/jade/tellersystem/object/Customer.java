@@ -8,6 +8,9 @@ public class Customer {
 	private String customer_middle_name;
 	private String customer_last_name;
 	private String customer_full_name;
+	private Date customer_birthday;
+	private String customer_sex;
+	private String customer_civil_status;
 	private String customer_address;
 	private String customer_occupation;
 	private String customer_description;
@@ -15,31 +18,27 @@ public class Customer {
 	private Date customer_date_updated;
 	private int teller_id;
 	
-	public Customer(String customer_id, String customer_first_name, String customer_middle_name, String customer_last_name,
-			String customer_full_name, String customer_address, String customer_occupation, String customer_description,
-			Date customer_date_joined, Date customer_date_updated, int teller_id) {
+	public Customer(String customer_id, String customer_full_name, String customer_occupation,
+			Date customer_date_joined, int teller_id) {
 		super();
 		this.customer_id = customer_id;
-		this.customer_first_name = customer_first_name;
-		this.customer_middle_name = customer_middle_name;
-		this.customer_last_name = customer_last_name;
 		this.customer_full_name = customer_full_name;
-		this.customer_address = customer_address;
 		this.customer_occupation = customer_occupation;
-		this.customer_description = customer_description;
 		this.customer_date_joined = customer_date_joined;
-		this.customer_date_updated = customer_date_updated;
 		this.teller_id = teller_id;
 	}
-	
-	public Customer(String customer_id, String customer_first_name, String customer_middle_name, String customer_last_name,
-			String customer_address, String customer_occupation, String customer_description,
-			Date customer_date_joined) {
+
+	public Customer(String customer_id, String customer_first_name, String customer_middle_name,
+			String customer_last_name, Date customer_birthday, String customer_sex, String customer_civil_status,
+			String customer_address, String customer_occupation, String customer_description, Date customer_date_joined) {
 		super();
 		this.customer_id = customer_id;
 		this.customer_first_name = customer_first_name;
 		this.customer_middle_name = customer_middle_name;
 		this.customer_last_name = customer_last_name;
+		this.customer_birthday = customer_birthday;
+		this.customer_sex = customer_sex;
+		this.customer_civil_status = customer_civil_status;
 		this.customer_address = customer_address;
 		this.customer_occupation = customer_occupation;
 		this.customer_description = customer_description;
@@ -84,6 +83,30 @@ public class Customer {
 
 	public void setCustomer_full_name(String customer_full_name) {
 		this.customer_full_name = customer_full_name;
+	}
+
+	public Date getCustomer_birthday() {
+		return customer_birthday;
+	}
+
+	public String getCustomer_sex() {
+		return customer_sex;
+	}
+
+	public String getCustomer_civil_status() {
+		return customer_civil_status;
+	}
+
+	public void setCustomer_birthday(Date customer_birthday) {
+		this.customer_birthday = customer_birthday;
+	}
+
+	public void setCustomer_sex(String customer_sex) {
+		this.customer_sex = customer_sex;
+	}
+
+	public void setCustomer_civil_status(String customer_civil_status) {
+		this.customer_civil_status = customer_civil_status;
 	}
 
 	public String getCustomer_address() {

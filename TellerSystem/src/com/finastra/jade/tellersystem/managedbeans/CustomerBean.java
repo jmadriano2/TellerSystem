@@ -24,8 +24,11 @@ public class CustomerBean {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String address;
+	private Date birthday;
+	private String sex;
+	private String civilStatus;
 	private String occupation;
+	private String address;
 	private String description;
 	private Date dateJoined;
 	private int tellerId;
@@ -72,6 +75,30 @@ public class CustomerBean {
 
 	public String getLastName() {
 		return lastName;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public String getCivilStatus() {
+		return civilStatus;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public void setCivilStatus(String civilStatus) {
+		this.civilStatus = civilStatus;
 	}
 
 	public void setLastName(String lastName) {
@@ -128,11 +155,19 @@ public class CustomerBean {
 	}
 
 	public String getFormattedDate() {
-		return CustomStringUtils.formatDate(dateJoined);
+		return CustomStringUtils.formatDateTime(dateJoined);
 	}
 
 	public String getFormattedDate(Date date) {
-		return CustomStringUtils.formatDate(date);
+		return CustomStringUtils.formatDateTime(date);
+	}
+	
+	public String getParsedSex() {
+		return CustomStringUtils.parseSex(sex);
+	}
+	
+	public String getFormattedBirthday() {
+		return CustomStringUtils.formatDate(birthday);
 	}
 
 	public String tellerName() {
@@ -157,6 +192,9 @@ public class CustomerBean {
 		firstName = customer.getCustomer_first_name();
 		middleName = customer.getCustomer_middle_name();
 		lastName = customer.getCustomer_last_name();
+		birthday = customer.getCustomer_birthday();
+		sex = customer.getCustomer_sex();
+		civilStatus = customer.getCustomer_civil_status();
 		address = customer.getCustomer_address();
 		occupation = customer.getCustomer_occupation();
 		description = customer.getCustomer_description();
@@ -168,10 +206,10 @@ public class CustomerBean {
 		if (!CustomerDao.exists(customerId)) {
 			if (customerId == 0) {
 				customerId = CustomerDao.insertCustomer(customerId, firstName, middleName, lastName, address,
-						occupation, description, dateJoined);
+						occupation, description, dateJoined, birthday, sex, civilStatus);
 			} else {
 				CustomerDao.insertCustomer(customerId, firstName, middleName, lastName, address,
-						occupation, description, dateJoined);
+						occupation, description, dateJoined, birthday, sex, civilStatus);
 			}
 			customerList = CustomerDao.getAllCustomers();
 			setCustomerBean(CustomerDao.getCustomer(customerId));

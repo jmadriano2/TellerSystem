@@ -21,7 +21,7 @@ import com.finastra.jade.tellersystem.util.CustomStringUtils;
 public class CustomerDao {
 
 	public static int insertCustomer(int id, String firstName, String middleName, String lastName, String address,
-			String occupation, String description, Date dateJoined) {
+			String occupation, String description, Date dateJoined, Date birthday, String sex, String civilStatus) {
 		int customerNumber = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -33,10 +33,13 @@ public class CustomerDao {
 
 		try {
 			conn = DataConnect.getConnection();
-			stmt = conn.prepareStatement("INSERT INTO customer(" + "customer_id, customer_first_name, "
-					+ "customer_middle_name, customer_last_name, " + "customer_address, customer_occupation, "
-					+ "customer_description, customer_date_joined, " + "teller_id) " + "VALUES( ?, ?, ?, ?, ?, "
-					+ "?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			stmt = conn.prepareStatement(
+					"INSERT INTO customer(customer_id, customer_first_name, "
+							+ "customer_middle_name, customer_last_name, customer_address, customer_occupation, "
+							+ "customer_description, customer_date_joined, teller_id, customer_birthday, "
+							+ "customer_sex, customer_civil_status) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
 			if (id == 0)
 				stmt.setNull(1, Types.INTEGER);
 			else
@@ -49,6 +52,9 @@ public class CustomerDao {
 			stmt.setString(7, description);
 			stmt.setObject(8, dateJoined.toInstant().atZone(ZoneId.of("GMT+8")).toLocalDateTime());
 			stmt.setInt(9, teller_id);
+			stmt.setDate(10, new java.sql.Date(birthday.getTime()));
+			stmt.setString(11, sex);
+			stmt.setString(12, civilStatus);
 			customerNumber = stmt.executeUpdate();
 
 			ResultSet customer = stmt.getGeneratedKeys();
@@ -112,21 +118,15 @@ public class CustomerDao {
 						customer_middle_name = "";
 					}
 					String customer_last_name = rs.getString("customer_last_name");
-					String customer_address = rs.getString("customer_address");
 					String customer_occupation = rs.getString("customer_occupation");
-					String customer_description = rs.getString("customer_description");
-					if (rs.wasNull()) {
-						customer_description = "";
-					}
 					Date customer_date_joined = rs.getTimestamp("customer_date_joined");
-					Date customer_date_updated = rs.getTimestamp("customer_date_updated");
 					int teller_id = rs.getInt("teller_id");
 
-					String customer_full_name = CustomStringUtils.fullName(customer_first_name, customer_middle_name, customer_last_name);
+					String customer_full_name = CustomStringUtils.fullName(customer_first_name, customer_middle_name,
+							customer_last_name);
 
-					customers.add(new Customer(padded_customer_id, customer_first_name, customer_middle_name,
-							customer_last_name, customer_full_name, customer_address, customer_occupation,
-							customer_description, customer_date_joined, customer_date_updated, teller_id));
+					customers.add(new Customer(padded_customer_id, customer_full_name, customer_occupation,
+							customer_date_joined, teller_id));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -152,8 +152,8 @@ public class CustomerDao {
 
 			con = DataConnect.getConnection();
 			stmt = con.prepareStatement("SELECT customer_id, customer_first_name, customer_middle_name, "
-					+ "customer_last_name, customer_address, customer_occupation, "
-					+ "customer_description, customer_date_joined FROM  customer WHERE customer_id = ?");
+					+ "customer_last_name, customer_birthday, customer_sex, customer_civil_status, customer_address, "
+					+ "customer_occupation, customer_description, customer_date_joined FROM  customer WHERE customer_id = ?");
 
 			stmt.setInt(1, viewed_customer);
 
@@ -167,6 +167,9 @@ public class CustomerDao {
 					customer_middle_name = "";
 				}
 				String customer_last_name = rs.getString("customer_last_name");
+				Date customer_birthday = rs.getDate("customer_birthday");
+				String customer_sex = rs.getString("customer_sex");
+				String customer_civil_status = rs.getString("customer_civil_status");
 				String customer_address = rs.getString("customer_address");
 				String customer_occupation = rs.getString("customer_occupation");
 				String customer_description = rs.getString("customer_description");
@@ -176,8 +179,8 @@ public class CustomerDao {
 				Date customer_date_joined = rs.getTimestamp("customer_date_joined");
 
 				customer = new Customer(padded_customer_id, customer_first_name, customer_middle_name,
-						customer_last_name, customer_address, customer_occupation, customer_description,
-						customer_date_joined);
+						customer_last_name, customer_birthday, customer_sex, customer_civil_status, customer_address,
+						customer_occupation, customer_description, customer_date_joined);
 
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -69,10 +69,25 @@ public class CustomStringUtils {
 		return currencyFormat(balance) + " " + formatBalanceStatus(balanceStatus);
 	}
 
-	public static String formatDate(Date date) {
+	public static String formatDateTime(Date date) {
 		String pattern = "dd MMMM, yyyy  |  h:mm a";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
 		return simpleDateFormat.format(date);
+	}
+
+	public static String formatDate(Date date) {
+		String pattern = "dd MMMM, yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format(date);
+	}
+
+	public static String parseSex(String sex) {
+		if (sex.equals("M")) {
+			return "Male";
+		} else {
+			return "Female";
+		}
 	}
 }
