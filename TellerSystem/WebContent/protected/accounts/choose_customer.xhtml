@@ -20,33 +20,44 @@
 
 	<ui:define name="content">
 		<h3 style="text-align: center">Choose Customer</h3>
+		
+		<b:row class="body_form">
+			<h:form class="body_form">
+				<b:dataTable value="#{customerBean.customerList}"
+					var="customer" select="true"
+					onselect='ajax:accountBean.setCustomer(account.account_id, customer.customer_full_name)};'>
 
-		<h:form>
-			<b:dataTable value="#{customerBean.customerList}" var="customer">
-				<b:dataTableColumn value="#{customer.customer_id}"
-					label="Customer Number" order="asc"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
-				<b:dataTableColumn value="#{customer.customer_full_name}"
-					label="Name" header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
-				<b:dataTableColumn value="#{customer.customer_occupation}"
-					label="Occupation" header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
-				<b:dataTableColumn value="#{customer.customer_date_joined}"
-					label="Date Joined" header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578' />
+					<b:dataTableColumn value="#{customer.customer_id}"
+						label="Customer Number" order="asc"
+						header-style-class='table_header'
+						content-style-class='table_content' />
 
-				<b:dataTableColumn label="Action"
-					header-style='background:#6c7ae0;color:#f9e9f4'
-					content-style='background:#ffffff;color:#a78578'>
+					<b:dataTableColumn value="#{customer.customer_full_name}"
+						label="Name" header-style-class='table_header'
+						content-style-class='table_content' />
 
-					<h:commandLink value="Create"
-						action="#{accountBean.createAccountForm(customer.customer_id, customer.customer_full_name)}" />
+					<b:dataTableColumn
+						value="#{customer.customer_occupation}"
+						label="Occupation" header-style-class='table_header'
+						content-style-class='table_content' />
+					<b:dataTableColumn value="#{transactionAccount.balanceStatus}"
+						label="Status" header-style-class='table_header'
+						content-style-class='table_content' />
 
-				</b:dataTableColumn>
-			</b:dataTable>
-		</h:form>
+					<b:dataTableColumn
+						value="#{customer.customer_date_joined}"
+						label="Overdraft" header-style-class='table_header'
+						content-style-class='table_content' />
+
+				</b:dataTable>
+				
+				<b:growl />
+
+				<b:commandButton value="Select Customer" look="info" action="#{accountBean.createAccountForm()}"
+					style-class="transaction_button" />
+
+			</h:form>
+		</b:row>
 
 	</ui:define>
 </ui:composition>

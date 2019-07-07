@@ -30,6 +30,7 @@ public class AccountDao {
 			stmt.setInt(4, sequence);
 			stmt.setDouble(5, overdraft);
 			stmt.setInt(6, customerId);
+			System.out.println(customerId);
 			i = stmt.executeUpdate();
 
 			System.out.println("Account '" + accountId + "' Added Successfully\ni: " + i);

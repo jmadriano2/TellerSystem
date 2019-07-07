@@ -15,6 +15,7 @@ import com.finastra.jade.tellersystem.dao.LedgerDao;
 import com.finastra.jade.tellersystem.object.Account;
 import com.finastra.jade.tellersystem.object.Balance;
 import com.finastra.jade.tellersystem.util.CustomStringUtils;
+import com.finastra.jade.tellersystem.util.CustomMessageUtils;
 
 @SessionScoped
 @ManagedBean
@@ -166,9 +167,12 @@ public class AccountBean {
 				+ CustomStringUtils.formatBalanceStatus(balance.getBalanceStatus());
 	}
 
-	public String createAccountForm(String padded_customer_number, String customer_name) {
-		customerId = Integer.parseInt(padded_customer_number);
-		customerName = customer_name;
+	public String createAccountForm() {
+		if(customerId==0) {
+			CustomMessageUtils.showWarning("Please choose a customer");
+			return "#";
+		}
+		
 		type = "S";
 
 		return "create_account";
@@ -178,7 +182,7 @@ public class AccountBean {
 		String paddedCustomerId = paddedCustomerId();
 		String paddedAccountSequence = paddedAccountSequence();
 		accountId = currency + paddedCustomerId + type + paddedAccountSequence;
-		System.out.println("Account ID: " + accountId);
+		System.out.println("Account ID: " + accountId + "\nCustomer ID: " + customerId);
 
 		if (!AccountDao.exists(accountId)) {
 			if (AccountDao.insertAccount(accountId, type, currency, sequence, overdraft, customerId, initialDeposit)) {
@@ -190,14 +194,8 @@ public class AccountBean {
 				return "create_account_success";
 			}
 		}
-		showDuplicateError(customerId);
+		CustomMessageUtils.showError("The account with ID '" + accountId + "' already exists");
 		return "create_account_error";
-	}
-
-	public void showDuplicateError(int customerId) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"The account with ID '" + accountId + "' already exists", "Error!"));
 	}
 
 	public String viewAccountDetails() {
@@ -210,9 +208,15 @@ public class AccountBean {
 		return "account_details";
 	}
 	
-	public void setAccount(String viewed_account) {
+	public void setAccount(String viewed_account, String fullName) {
 		accountId = viewed_account;
 		System.out.println("You have set account to " + accountId);
+	}
+	
+	public void setCustomer(int customerNumber, String fullName) {
+		customerId = customerNumber;
+		customerName = fullName;
+		System.out.println("You have selected customer " + customerName + " with ID " + customerId);
 	}
 
 	private void setAccountBean(Account account) {

@@ -15,6 +15,7 @@ import com.finastra.jade.tellersystem.dao.TransactionDao;
 import com.finastra.jade.tellersystem.object.Account;
 import com.finastra.jade.tellersystem.object.Transaction;
 import com.finastra.jade.tellersystem.object.TransactionAccount;
+import com.finastra.jade.tellersystem.util.CustomMessageUtils;
 import com.finastra.jade.tellersystem.util.CustomStringUtils;
 
 @SessionScoped
@@ -193,7 +194,7 @@ public class TransactionBean {
 
 	private boolean zeroAmount() {
 		if (amount == 0) {
-			showError("The transaction amount must not be 0");
+			CustomMessageUtils.showError("The transaction amount must not be 0");
 			System.out.println("withdrawal amount is 0. -_-");
 			return true;
 		}
@@ -204,7 +205,7 @@ public class TransactionBean {
 		Account account = AccountDao.getAccount(accountNumber);
 		double balance = account.getBalance();
 		if (account.getAccount_type().equals("S") && amount > balance) {
-			showError("A savings account cannot be overdrawn.");
+			CustomMessageUtils.showError("A savings account cannot be overdrawn.");
 			return false;
 		}
 		double resultingBalance = 0;
@@ -224,14 +225,9 @@ public class TransactionBean {
 		}
 
 		if (resultingBalanceStatus.equals("Debit") && resultingBalance > overdraft) {
-			showError("Transaction amount must not exceed overdraft limit.");
+			CustomMessageUtils.showError("Transaction amount must not exceed overdraft limit.");
 			return false;
 		}
 		return true;
-	}
-
-	public void showError(String error) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, error, "Error!"));
 	}
 }
