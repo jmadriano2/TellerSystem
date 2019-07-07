@@ -45,8 +45,8 @@
 						content-style-class='table_content' />
 
 					<b:dataTableColumn
-						value="#{customer.customer_date_joined}"
-						label="Overdraft" header-style-class='table_header'
+						value="#{customerBean.getFormattedDate(customer.customer_date_joined)}"
+						label="Date Joined" header-style-class='table_header'
 						content-style-class='table_content' />
 
 				</b:dataTable>

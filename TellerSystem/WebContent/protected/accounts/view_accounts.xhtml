@@ -51,7 +51,7 @@
 						content-style-class='table_content' />
 
 					<b:dataTableColumn
-						value="#{account.date_created}"
+						value="#{accountBean.getFormattedDate(account.date_created)}"
 						label="Date Created" header-style-class='table_header'
 						content-style-class='table_content' />
 

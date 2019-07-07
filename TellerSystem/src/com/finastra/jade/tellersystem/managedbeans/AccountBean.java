@@ -95,14 +95,6 @@ public class AccountBean {
 		this.initialDeposit = initialDeposit;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -137,6 +129,14 @@ public class AccountBean {
 
 	public String toCurrencyFormat(double amount) {
 		return CustomStringUtils.currencyFormat(amount);
+	}
+	
+	public String getFormattedDate() {
+		return CustomStringUtils.formatDate(dateCreated);
+	}
+	
+	public String getFormattedDate(Date date) {
+		return CustomStringUtils.formatDate(date);
 	}
 
 	public void resetAccountBean() {

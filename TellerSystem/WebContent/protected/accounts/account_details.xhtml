@@ -35,12 +35,14 @@
 				label="Customer Number" readonly="true"
 				value="#{accountBean.paddedCustomerId()}" />
 
+			<b:inputText labelColMd="2" colMd="2" readonly="true"
+				label="Date Created" value="#{accountBean.getFormattedDate()}"/>
+
 			<b:inputText labelColMd="2" colMd="2" maxlength="2"
 				label="Account Type" value="#{accountBean.typeName()}" readonly="true" />
 
 			<b:inputText labelColMd="2" colMd="2" label="Overdraft Limit" value="#{accountBean.overdraft}" 
                readonly="true"/>
-
 				
 			<b:inputText labelColMd="2" colMd="1"  maxlength="2"
 				label="Currency" value="#{accountBean.currency}" readonly="true" />

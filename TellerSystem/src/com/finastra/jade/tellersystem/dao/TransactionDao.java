@@ -19,7 +19,7 @@ public class TransactionDao {
 	public static List<TransactionAccount> getAllTransactionAccounts() {
 		Connection con = null;
 		PreparedStatement ps = null;
-		List<TransactionAccount> transactionAccount = new ArrayList<>();
+		List<TransactionAccount> transactionAccounts = new ArrayList<>();
 
 		try {
 			con = DataConnect.getConnection();
@@ -46,7 +46,7 @@ public class TransactionDao {
 				double balanceAmount = balance.getBalance();
 				String balanceStatus = balance.getBalanceStatus();
 
-				transactionAccount
+				transactionAccounts
 						.add(new TransactionAccount(accountId, fullName, balanceAmount, balanceStatus, overdraft));
 			}
 		} catch (SQLException ex) {
@@ -54,13 +54,13 @@ public class TransactionDao {
 		} finally {
 			DataConnect.close(con);
 		}
-		return transactionAccount;
+		return transactionAccounts;
 	}
 
 	public static List<TransactionAccount> getRecipientAccounts(String accountNumber) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		List<TransactionAccount> recipientAccount = new ArrayList<>();
+		List<TransactionAccount> recipientAccounts = new ArrayList<>();
 
 		try {
 			con = DataConnect.getConnection();
@@ -70,7 +70,7 @@ public class TransactionDao {
 
 			ps.setString(1, accountNumber.substring(0, 3));
 			ps.setString(2, accountNumber);
-			
+
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -90,7 +90,7 @@ public class TransactionDao {
 				double balanceAmount = balance.getBalance();
 				String balanceStatus = balance.getBalanceStatus();
 
-				recipientAccount
+				recipientAccounts
 						.add(new TransactionAccount(accountId, fullName, balanceAmount, balanceStatus, overdraft));
 			}
 		} catch (SQLException ex) {
@@ -98,7 +98,41 @@ public class TransactionDao {
 		} finally {
 			DataConnect.close(con);
 		}
-		return recipientAccount;		
+		return recipientAccounts;
+	}
+
+	public static List<Transaction> getAllTransactions() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		List<Transaction> transactions = new ArrayList<>();
+
+		try {
+			con = DataConnect.getConnection();
+			ps = con.prepareStatement("SELECT entry_id, entry_type, entry_amount, entry_date, recipient_id, account_id "
+					+ "FROM ledger_entry WHERE entry_type IN ('CrD', 'DrW', 'DrT')");
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int traceNumber = rs.getInt("entry_id");
+				String type = rs.getString("entry_type");
+				double amount = rs.getDouble("entry_amount");
+				Date date = rs.getTimestamp("entry_date");
+				String recipientId = rs.getString("recipient_id");
+				if (rs.wasNull()) {
+					recipientId = "---";
+				}
+				String accountId = rs.getString("account_id");
+
+				transactions
+						.add(new Transaction(traceNumber, type, amount, date, recipientId, accountId));
+			}
+		} catch (SQLException ex) {
+			System.out.println("Login error -->" + ex.getMessage());
+		} finally {
+			DataConnect.close(con);
+		}
+		return transactions;
 	}
 
 	public static Transaction getTransaction(int traceNumber) {
@@ -122,10 +156,9 @@ public class TransactionDao {
 
 				double resultingBalance = transactionBalance;
 				String resultingBalanceStatus = transactionBalanceStatus;
-				
-				
-				if (type.substring(0, 2).equals("Cr")) { //if transaction credits account, do:
-					if (transactionBalanceStatus.equals("Credit")) { //if balance on transaction is in credit, do:
+
+				if (type.substring(0, 2).equals("Cr")) { // if transaction credits account, do:
+					if (transactionBalanceStatus.equals("Credit")) { // if balance on transaction is in credit, do:
 						resultingBalance += amount;
 					} else { // if in debit, then do:
 						resultingBalance -= amount;
@@ -134,8 +167,8 @@ public class TransactionDao {
 							resultingBalanceStatus = CustomStringUtils.reverseBalanceStatus(resultingBalanceStatus);
 						}
 					}
-				} else { //if transaction debits account, do:
-					if (transactionBalanceStatus.equals("Debit")) { //if balance on transaction is in debit, do:
+				} else { // if transaction debits account, do:
+					if (transactionBalanceStatus.equals("Debit")) { // if balance on transaction is in debit, do:
 						resultingBalance += amount;
 					} else { // if in credit, then do:
 						resultingBalance -= amount;
@@ -160,5 +193,4 @@ public class TransactionDao {
 		System.out.println("For some reason, getTransaction returned Null. :p");
 		return null;
 	}
-
 }

@@ -40,8 +40,8 @@
 				label="Occupation" value="#{customerBean.occupation}" />
 			<b:growl />
 
-			<b:dateTimePicker labelColMd="2" colMd="3" readonly="true"
-				label="Date Joined" inline="true" value="#{customerBean.dateJoined}"/>
+			<b:inputText labelColMd="2" colMd="3" readonly="true"
+				label="Date Joined" value="#{customerBean.getFormattedDate()}"/>
 			<b:inputTextarea labelColMd="2" colMd="4"
 				readonly="true" label="Description"
 				value="#{customerBean.description}" rows="2" />

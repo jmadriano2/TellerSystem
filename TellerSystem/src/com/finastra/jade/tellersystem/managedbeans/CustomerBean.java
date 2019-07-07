@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.finastra.jade.tellersystem.dao.CustomerDao;
 import com.finastra.jade.tellersystem.object.Customer;
+import com.finastra.jade.tellersystem.util.CustomStringUtils;
 
 @SessionScoped
 @ManagedBean
@@ -123,6 +124,14 @@ public class CustomerBean {
 	public String paddedCustomerId() {
 		String paddedId = String.format("%06d", customerId);
 		return paddedId;
+	}
+	
+	public String getFormattedDate() {
+		return CustomStringUtils.formatDate(dateJoined);
+	}
+	
+	public String getFormattedDate(Date date) {
+		return CustomStringUtils.formatDate(date);
 	}
 
 	public String tellerName() {

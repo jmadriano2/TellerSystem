@@ -70,8 +70,7 @@ public class CustomStringUtils {
 	}
 
 	public static String formatDate(Date date) {
-
-		String pattern = "MM/dd/yyyy | h:mm a";
+		String pattern = "dd MMMM, yyyy  |  h:mm a";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
 		return simpleDateFormat.format(date);
