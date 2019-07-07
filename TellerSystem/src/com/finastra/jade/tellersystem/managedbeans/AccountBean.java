@@ -5,10 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import com.finastra.jade.tellersystem.dao.AccountDao;
 import com.finastra.jade.tellersystem.dao.LedgerDao;

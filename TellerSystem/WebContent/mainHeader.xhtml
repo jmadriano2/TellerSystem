@@ -4,23 +4,17 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	<b:column col-md="3" style-class="fill_parent">
-		<a href="#" onclick="window.history.back()"> 
-			<b:image library="img" name="back_icon.png" 
-				style-class="header_button" tooltip="Back" />
-		</a>
-	</b:column>
-	<b:column col-md="6" style-class="fill_parent">
-		<h:link outcome="home">
-			<h1 class="main_title">Jade Teller System</h1>
-		</h:link>
-	</b:column>
-	<b:column col-md="3" style-class="fill_parent">
-		<h:form class="fill_parent logout">
-			<h:commandLink action="#{loginBean.logout}">
-				<b:image library="img" name="logout.png"
-					style-class="header_button" tooltip="Logout" />
-			</h:commandLink>
-		</h:form>
-	</b:column>
+	<a href="#" onclick="window.history.back()"
+		class="fill_parent back_column"> <b:image library="img"
+			name="back_icon.png" style-class="header_button" tooltip="Back" />
+	</a>
+	<h:link outcome="home" class="fill_parent title_column">
+		<h1 class="main_title">Jade Teller System</h1>
+	</h:link>
+	<h:form class="fill_parent logout_column logout">
+		<h:commandLink action="#{loginBean.logout}">
+			<b:image library="img" name="logout.png" style-class="header_button"
+				tooltip="Logout" />
+		</h:commandLink>
+	</h:form>
 </ui:composition>

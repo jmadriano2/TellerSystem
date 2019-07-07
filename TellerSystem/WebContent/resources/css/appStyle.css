@@ -39,20 +39,32 @@ body {
 }
 
 .fill_parent {
-	height: 100%;
 	position: absolute;
+	height: 100%;
 	left: 0;
 	top: 0;
 	bottom: 0;
-	padding: 0 !important;
+	padding: 0.833% !important;
+}
+
+.back_column {
+	width: 20%;
+}
+
+.title_column {
+	left: 20%;
+	width: 60%;
+}
+
+.logout_column {
+	position: absolute;
+	left: 80% !important;
+	width: 20%;
+	text-align: right !important;
 }
 
 .header_button {
-	width: 15%;
-}
-
-.logout {
-	text-align: right !important;
+	width: 17%;
 }
 
 .main_body {
