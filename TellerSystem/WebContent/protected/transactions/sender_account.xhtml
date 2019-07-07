@@ -55,9 +55,11 @@
 
 				</b:dataTable>
 
+				<b:growl />
+
 				<b:commandButton value="Select Sender" look="info"
 					actionListener="#{transactionBean.resetRecipientAccounts()}"
-					action="recipient_account" style-class="transaction_button" />
+					action="#{transactionBean.chooseSender()}" style-class="transaction_button" />
 
 			</h:form>
 		</b:row>

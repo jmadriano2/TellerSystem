@@ -28,7 +28,7 @@
 		<b:row class="body_form">
 			<h:form class="body_form">
 				<b:dataTable value="#{transactionBean.recipientAccounts()}"
-					var="transactionAccount" select="true" 
+					var="transactionAccount" select="true"
 					onselect='ajax:transactionBean.setTransferRecipient(transactionAccount.accountId);'>
 
 					<b:dataTableColumn value="#{transactionAccount.accountId}"
@@ -55,9 +55,12 @@
 
 				</b:dataTable>
 
-				<b:commandButton value="Select Recipient" look="info" action="transfer"
+				<b:growl />
+
+				<b:commandButton value="Select Recipient" look="info"
+					action="#{transactionBean.chooseRecipient()}"
 					style-class="transaction_button" />
-					
+
 				<h:commandButton id="hdnBtn"
 					actionListener="#{transactionBean.resetTransactionBean()}"
 					style="display: none;" />
@@ -66,9 +69,9 @@
 		</b:row>
 
 	</ui:define>
-	
+
 	<ui:define name="footer">
 		<ui:include src="/mainFooter.xhtml"></ui:include>
 	</ui:define>
-	
+
 </ui:composition>

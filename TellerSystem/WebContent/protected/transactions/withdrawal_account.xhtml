@@ -54,7 +54,9 @@
 
 				</b:dataTable>
 
-				<b:commandButton value="Withdraw" look="info" action="withdraw"
+				<b:growl />
+
+				<b:commandButton value="Withdraw" look="info" action="#{transactionBean.withdrawalForm()}"
 					style-class="transaction_button" />
 
 			</h:form>

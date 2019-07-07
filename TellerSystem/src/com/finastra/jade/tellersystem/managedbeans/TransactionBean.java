@@ -51,14 +51,19 @@ public class TransactionBean {
 	}
 
 	public void resetTransactionBean() {
+		accountNumber = "";
+		recipientNumber = "";
 		amount = 0;
 		transactionAccounts = TransactionDao.getAllTransactionAccounts();
 		transactions = TransactionDao.getAllTransactions();
 	}
 
 	public void resetRecipientAccounts() {
+		recipientNumber = "";
 		amount = 0;
-		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
+		if(accountIsSelected()) {
+			recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
+		}
 	}
 
 	public List<TransactionAccount> recipientAccounts() {
@@ -262,7 +267,7 @@ public class TransactionBean {
 
 	public String viewTransactionDetails() {
 		setTransactionBean(TransactionDao.getTransaction(traceNumber));
-		if(recipientTraceNumber >= 0) {			
+		if (recipientTraceNumber >= 0) {
 			setRecipient(TransactionDao.getTransaction(recipientTraceNumber));
 		}
 
@@ -306,5 +311,51 @@ public class TransactionBean {
 			return false;
 		}
 		return true;
+	}
+
+	public String depositForm() {
+		if(!accountIsSelected()) {
+			CustomMessageUtils.showWarning("Please select a deposit account");
+			return "#";
+		}
+		return "deposit";
+	}
+	
+	public String withdrawalForm() {
+		if(!accountIsSelected()) {
+			CustomMessageUtils.showWarning("Please select a withdrawal account");
+			return "#";
+		}
+		return "withdraw";
+	}
+	
+	public String chooseSender() {
+		if(!accountIsSelected()) {
+			CustomMessageUtils.showWarning("Please select a sender account");
+			return "#";
+		}
+		return "recipient_account";
+	}
+	
+	public String chooseRecipient() {
+		if(!recipientSelected()) {
+			CustomMessageUtils.showWarning("Please select a recipient account");
+			return "#";
+		}
+		return "transfer";
+	}
+
+	private boolean accountIsSelected() {
+		if (accountNumber.isBlank()) {
+			return false;
+		} else
+			return true;
+	}
+	
+	private boolean recipientSelected() {
+		if (recipientNumber.isBlank()) {
+			return false;
+		} else
+			return true;
 	}
 }
