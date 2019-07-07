@@ -49,7 +49,7 @@
 
 					<b:inputText colMd="6" readonly="true" style="visibility:hidden;"/>
 
-					<b:commandButton value="View All Accounts" rendered="#{!transactionBean.isTransfer()}"
+					<b:commandButton value="View All Transactions" rendered="#{!transactionBean.isTransfer()}"
 						action="return_to_view_accounts" look="primary" col-md="6"
 						offset="8" style="width:100%" />
 				</b:form>
@@ -87,7 +87,7 @@
 					<b:inputText colMd="6" style="visibility:hidden;"
 						value="#{transactionBean.getTraceNumber()}" readonly="true" />
 
-					<b:commandButton value="View All Accounts"
+					<b:commandButton value="View All Transactions"
 						action="return_to_view_accounts" look="primary" col-md="6"
 						offset="8" style="width:100%" />
 				</b:form>

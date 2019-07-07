@@ -113,82 +113,89 @@ public class LedgerDao {
 		return -1;
 	}
 
-	public static int creditAccount(String entryType, double entryAmount, String accountId, Date date) {
+	public static String transferFunds(String senderAccount, String recipientAccount, double amount)
+			throws SQLException {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement debitAccount = null;
+		PreparedStatement creditAccount = null;
+		int debitTraceNumber = 0, creditTraceNumber = 0;
+
+		String debitString = "INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, "
+				+ "entry_balance_status, entry_date, recipient_id, account_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String creditString = "INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, "
+				+ "entry_balance_status, entry_date, account_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+		Date date = new Date();
+
+		long time = date.getTime();
+
+		Timestamp timestamp = new Timestamp(time);
+		System.out.println("Current Time Stamp: " + timestamp);
 
 		try {
 			conn = DataConnect.getConnection();
-			stmt = conn.prepareStatement(
-					"INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, entry_balance_status, entry_date, account_id) VALUES (?, ?, ?, ?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, entryType);
-			stmt.setDouble(2, entryAmount);
-			Balance balance = getBalance(accountId);
-			stmt.setDouble(3, balance.getBalance());
-			stmt.setString(4, balance.getBalanceStatus());
+			System.out.println("I am inside the try block of transferFunds");
 
-			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-			stmt.setDate(5, sqlDate);
+			conn.setAutoCommit(false);
+			debitAccount = conn.prepareStatement(debitString, Statement.RETURN_GENERATED_KEYS);
+			creditAccount = conn.prepareStatement(creditString, Statement.RETURN_GENERATED_KEYS);
 
-			stmt.setString(6, accountId);
+			debitAccount.setString(1, "DrT");
+			debitAccount.setDouble(2, amount);
+			Balance senderBalance = getBalance(senderAccount);
+			debitAccount.setDouble(3, senderBalance.getBalance());
+			debitAccount.setString(4, senderBalance.getBalanceStatus());
+			debitAccount.setTimestamp(5, timestamp);
+			debitAccount.setString(6, recipientAccount);
+			debitAccount.setString(7, senderAccount);
 
-			int i = stmt.executeUpdate();
+			creditAccount.setString(1, "CrT");
+			creditAccount.setDouble(2, amount);
+			Balance recipientBalance = getBalance(recipientAccount);
+			creditAccount.setDouble(3, recipientBalance.getBalance());
+			creditAccount.setString(4, recipientBalance.getBalanceStatus());
+			creditAccount.setTimestamp(5, timestamp);
+			creditAccount.setString(6, recipientAccount);
 
-			System.out.println("Deposited " + entryAmount + " to account '" + accountId + "' Successfully\ni: " + i);
+			int i = debitAccount.executeUpdate();
+			System.out.println("Debited " + amount + " from account '" + senderAccount + "' Successfully i: " + i);
 
-			ResultSet rs = stmt.getGeneratedKeys();
-			if (rs.next())
-				return rs.getInt(1);
+			int j = creditAccount.executeUpdate();
+			System.out.println("Credited " + amount + " from account '" + recipientAccount + "' Successfully i: " + j);
 
-			stmt.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} finally {
-			DataConnect.close(conn);
-		}
-		return -1;
-	}
-
-	public static int debitAccount(String entryType, double entryAmount, String accountId, Date date) {
-		Connection conn = null;
-		PreparedStatement stmt = null;
-
-		try {
-			conn = DataConnect.getConnection();
-			stmt = conn.prepareStatement(
-					"INSERT INTO ledger_entry(entry_type, entry_amount, entry_balance, entry_balance_status, entry_date, account_id) VALUES (?, ?, ?, ?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, entryType);
-			stmt.setDouble(2, entryAmount);
-			Balance balance = getBalance(accountId);
-			stmt.setDouble(3, balance.getBalance());
-			stmt.setString(4, balance.getBalanceStatus());
-
-			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-			stmt.setDate(5, sqlDate);
-
-			stmt.setString(6, accountId);
-
-			int i = stmt.executeUpdate();
-
-			System.out.println("Withrew " + entryAmount + " from account '" + accountId + "' Successfully\ni: " + i);
-
-			ResultSet rs = stmt.getGeneratedKeys();
-			if (rs.next())
-				return rs.getInt(1);
-
-			stmt.close();
+			ResultSet debit = debitAccount.getGeneratedKeys();
+			if (debit.next())
+				debitTraceNumber = debit.getInt(1);
+			System.out.println("The Debit Trace Number inside fundsTransfer is " + debitTraceNumber);
+			
+			ResultSet credit = creditAccount.getGeneratedKeys();
+			if (credit.next())
+				creditTraceNumber = credit.getInt(1);
+			System.out.println("The Credit Trace Number inside fundsTransfer is " + creditTraceNumber);	
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException(e);
+			if (conn != null) {
+				try {
+					System.err.print("Transaction is being rolled back");
+					conn.rollback();
+				} catch (SQLException excep) {
+					excep.printStackTrace();
+				}
+			}
 		} finally {
-			DataConnect.close(conn);
+
+			if (debitAccount != null) {
+				debitAccount.close();
+			}
+			if (creditAccount != null) {
+				creditAccount.close();
+			}
+
+			conn.commit();
 		}
-		return -1;
+
+		return debitTraceNumber + "," + creditTraceNumber;
 	}
 
 	public static Balance getBalance(String accountId) {

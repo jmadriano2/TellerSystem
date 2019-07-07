@@ -1,5 +1,7 @@
 package com.finastra.jade.tellersystem.managedbeans;
 
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class TransactionBean {
 		amount = 0;
 		transactionAccounts = TransactionDao.getAllTransactionAccounts();
 	}
-	
+
 	public void resetRecipientAccounts() {
 		amount = 0;
 		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
@@ -60,7 +62,7 @@ public class TransactionBean {
 		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
 		return recipientAccounts;
 	}
-	
+
 	public List<TransactionAccount> getTransactionAccounts() {
 		return transactionAccounts;
 	}
@@ -95,7 +97,7 @@ public class TransactionBean {
 
 	public String getAccountNumberLabel() {
 		System.out.println("The type is " + type);
-		if(type.substring(2).equals("T")) {
+		if (type.substring(2).equals("T")) {
 			return "Sender Account Number";
 		}
 		return "Account Number";
@@ -135,11 +137,11 @@ public class TransactionBean {
 	public String getResultBalance() {
 		return CustomStringUtils.balanceWithStatus(resultingBalance, resultingBalanceStatus);
 	}
-	
+
 	public String getRecipientTransactionBalance() {
 		return CustomStringUtils.balanceWithStatus(recipientBalanceOnTransaction, recipientBalanceStatus);
 	}
-	
+
 	public String getRecipientResultBalance() {
 		return CustomStringUtils.balanceWithStatus(recipientResultingBalance, recipientResultingBalanceStatus);
 	}
@@ -156,9 +158,9 @@ public class TransactionBean {
 
 		return CustomStringUtils.padSixZeroes(traceNumber);
 	}
-	
+
 	public boolean isTransfer() {
-		if(type.substring(2).equals("T")) {
+		if (type.substring(2).equals("T")) {
 			return true;
 		}
 		return false;
@@ -203,21 +205,19 @@ public class TransactionBean {
 		return "withdrawal_success";
 	}
 
-	public String transfer() {
+	public String transfer() throws SQLException {
 
 		if (!validOverdraft() || zeroAmount()) {
 			return "#";
 		}
 
-		Date date = new Date(System.currentTimeMillis());
+		// inserts new transaction and returns generated ids
+		String[] traceNumbers = LedgerDao.transferFunds(accountNumber, recipientNumber, amount).split(",");
+		
+		System.out.println("Debit Trace Number: " + traceNumbers[0] + "\nCredit Trace Number: " + traceNumbers[1]);
 
-		int traceNumber = LedgerDao.debitAccount("DrT", amount, accountNumber, date);
-
-		// inserts new transaction and returns generated id
-		int traceNumber2 = LedgerDao.creditAccount("CrT", amount, recipientNumber, date);
-
-		setTransactionBean(TransactionDao.getTransaction(traceNumber));
-		setRecipient(TransactionDao.getTransaction(traceNumber2));
+		setTransactionBean(TransactionDao.getTransaction(Integer.parseInt(traceNumbers[0])));
+		setRecipient(TransactionDao.getTransaction(Integer.parseInt(traceNumbers[1])));
 
 		System.out.println("You have successfully transferred " + amount + " " + accountNumber.substring(0, 4)
 				+ "\nfrom " + accountNumber + " to " + recipientNumber);
