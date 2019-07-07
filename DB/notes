@@ -2,13 +2,9 @@
 
 !!! fix transfer historys
 !! fix negative entries
-!! fix 0 as default value in create customer
 !! fix customer form: Bday, civil status, gender
 !! confirmation modals!
-!! fix overdraft account details
-!! create footer
-!! store teller access to session
-!! fix reset choose customer table
+!! store teller access to loginbean
 
 
 id	owner	type	balance 	date_created
