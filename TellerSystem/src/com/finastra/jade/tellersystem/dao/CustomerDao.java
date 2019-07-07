@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import com.finastra.jade.tellersystem.util.CustomStringUtils;
 
 public class CustomerDao {
 
-	public static boolean insertCustomer(int id, String firstName, String middleName, String lastName, String address,
+	public static int insertCustomer(int id, String firstName, String middleName, String lastName, String address,
 			String occupation, String description, Date dateJoined) {
-		int i = 0;
+		int customerNumber = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
@@ -35,7 +36,7 @@ public class CustomerDao {
 			stmt = conn.prepareStatement("INSERT INTO customer(" + "customer_id, customer_first_name, "
 					+ "customer_middle_name, customer_last_name, " + "customer_address, customer_occupation, "
 					+ "customer_description, customer_date_joined, " + "teller_id) " + "VALUES( ?, ?, ?, ?, ?, "
-					+ "?, ?, ?, ?)");
+					+ "?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			if (id == 0)
 				stmt.setNull(1, Types.INTEGER);
 			else
@@ -48,9 +49,12 @@ public class CustomerDao {
 			stmt.setString(7, description);
 			stmt.setObject(8, dateJoined.toInstant().atZone(ZoneId.of("GMT+8")).toLocalDateTime());
 			stmt.setInt(9, teller_id);
-			i = stmt.executeUpdate();
+			customerNumber = stmt.executeUpdate();
 
-			System.out.println("Customer Added Successfully\ni: "+i);
+			ResultSet customer = stmt.getGeneratedKeys();
+			if (customer.next())
+				customerNumber = customer.getInt(1);
+			System.out.println("The Credit Trace Number inside fundsTransfer is " + customerNumber);
 
 			stmt.close();
 
@@ -60,7 +64,7 @@ public class CustomerDao {
 		} finally {
 			DataConnect.close(conn);
 		}
-		return i > 0;
+		return customerNumber;
 	}
 
 	public static boolean exists(int customerId) {

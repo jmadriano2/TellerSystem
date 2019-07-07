@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.finastra.jade.tellersystem.dao.CustomerDao;
 import com.finastra.jade.tellersystem.object.Customer;
+import com.finastra.jade.tellersystem.util.CustomMessageUtils;
 import com.finastra.jade.tellersystem.util.CustomStringUtils;
 
 @SessionScoped
@@ -125,11 +126,11 @@ public class CustomerBean {
 		String paddedId = String.format("%06d", customerId);
 		return paddedId;
 	}
-	
+
 	public String getFormattedDate() {
 		return CustomStringUtils.formatDate(dateJoined);
 	}
-	
+
 	public String getFormattedDate(Date date) {
 		return CustomStringUtils.formatDate(date);
 	}
@@ -165,24 +166,20 @@ public class CustomerBean {
 	public String createCustomer() throws ParseException {
 
 		if (!CustomerDao.exists(customerId)) {
-			if (CustomerDao.insertCustomer(customerId, firstName, middleName, lastName, address, occupation,
-					description, dateJoined)) {
-				customerList = CustomerDao.getAllCustomers();
-				System.out.println("returns create_customer_success");
-				setCustomerBean(CustomerDao.getCustomer(customerId));
-				return "create_customer_success";
+			if (customerId == 0) {
+				customerId = CustomerDao.insertCustomer(customerId, firstName, middleName, lastName, address,
+						occupation, description, dateJoined);
+			} else {
+				CustomerDao.insertCustomer(customerId, firstName, middleName, lastName, address,
+						occupation, description, dateJoined);
 			}
-		} else if (customerId == 0) {
-			
+			customerList = CustomerDao.getAllCustomers();
+			setCustomerBean(CustomerDao.getCustomer(customerId));
+			System.out.println("returns create_customer_success");
+			return "create_customer_success";
 		}
-		showDuplicateError(customerId);
+		CustomMessageUtils.showError("Customer with ID '" + paddedCustomerId() + "' already exists");
 		return "create_customer_error";
-	}
-
-	public void showDuplicateError(int customerId) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"Customer with ID '" + paddedCustomerId() + "' already exists", "Error!"));
 	}
 
 	public String viewCustomerDetails() {
@@ -190,7 +187,7 @@ public class CustomerBean {
 
 		return "customer_details";
 	}
-	
+
 	public void setCustomer(String padded_customer_number) {
 		customerId = Integer.parseInt(padded_customer_number);
 		System.out.println("You have set customer to " + customerId);
@@ -198,6 +195,7 @@ public class CustomerBean {
 
 	public String amendCustomer() throws ParseException {
 		CustomerDao.amendCustomer(firstName, middleName, lastName, address, occupation, description, customerId);
+		customerList = CustomerDao.getAllCustomers();
 		return "amend_customer_success";
 	}
 }
