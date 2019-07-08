@@ -262,6 +262,8 @@ public class TransactionBean {
 		System.out.println("You have successfully transferred " + amount + " " + accountNumber.substring(0, 4)
 				+ "\nfrom " + accountNumber + " to " + recipientNumber);
 
+		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
+		
 		return "transfer_success";
 	}
 
