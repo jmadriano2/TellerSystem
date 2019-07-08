@@ -26,37 +26,48 @@
 			<b:inputText labelColMd="2" colMd="1" label="Customer Number"
 				readonly="true" value="#{customerBean.paddedCustomerId()}" />
 
-			<b:inputText labelColMd="2" colMd="2" readonly="true"
-				label="First Name" value="#{customerBean.firstName}" />
+			<b:formGroup>
+				<b:inputText labelColMd="2" colMd="2" readonly="true"
+					label="First Name" value="#{customerBean.firstName}" />
 
-			<b:inputText labelColMd="2" colMd="2" readonly="true"
-				label="Middle Name" value="#{customerBean.middleName}" />
+				<b:inputText labelColMd="2" colMd="1" label="Civil Status"
+					value="#{customerBean.civilStatus}" readonly="true" />
+			</b:formGroup>
 
-			<b:inputText labelColMd="2" colMd="2" readonly="true"
-				label="Last Name" value="#{customerBean.lastName}"
-				required-message="The field 'Last Name' must not be empty" />
+			<b:formGroup>
+				<b:inputText labelColMd="2" colMd="2" readonly="true"
+					label="Middle Name" value="#{customerBean.middleName}" />
 
-			<b:inputText labelColMd="2" colMd="2" label="Birthday"
-				value="#{customerBean.getFormattedBirthday()}" readonly="true" />
+				<b:inputText labelColMd="2" colMd="4" readonly="true"
+					label="Address" value="#{customerBean.address}" />
+			</b:formGroup>
 
-			<b:inputText labelColMd="2" colMd="1" label="Sex"
-				value="#{customerBean.getParsedSex()}" readonly="true" />
+			<b:formGroup>
+				<b:inputText labelColMd="2" colMd="2" readonly="true"
+					label="Last Name" value="#{customerBean.lastName}"
+					required-message="The field 'Last Name' must not be empty" />
 
-			<b:inputText labelColMd="2" colMd="1" label="Civil Status"
-				value="#{customerBean.civilStatus}" readonly="true" />
+				<b:inputText labelColMd="2" colMd="2" readonly="true"
+					label="Occupation" value="#{customerBean.occupation}" />
+			</b:formGroup>
 
-			<b:inputText labelColMd="2" colMd="4" readonly="true" label="Address"
-				value="#{customerBean.address}"
-				required-message="The field 'Adress' must not be empty" />
+			<b:formGroup>
+				<b:inputText labelColMd="2" colMd="2" label="Birthday"
+					value="#{customerBean.getFormattedBirthday()}" readonly="true" />
 
-			<b:inputText labelColMd="2" colMd="2" readonly="true"
-				label="Occupation" value="#{customerBean.occupation}" />
+				<b:inputText labelColMd="2" colMd="2" readonly="true"
+					label="Date Joined" value="#{customerBean.getFormattedDate()}" />
+			</b:formGroup>
 
-			<b:inputText labelColMd="2" colMd="2" readonly="true"
-				label="Date Joined" value="#{customerBean.getFormattedDate()}" />
+			<b:formGroup>
+				<b:inputText labelColMd="2" colMd="1" label="Sex"
+					value="#{customerBean.getParsedSex()}" readonly="true" />
 
-			<b:inputTextarea labelColMd="2" colMd="4" readonly="true"
-				label="Description" value="#{customerBean.description}" rows="2" />
+				<b:inputTextarea labelColMd="3" colMd="4" readonly="true"
+					label="Description" value="#{customerBean.description}" rows="2" />
+			</b:formGroup>
+
+			<b:inputText labelColMd="6" colMd="6" style="visibility:hidden;" />
 
 			<b:growl />
 

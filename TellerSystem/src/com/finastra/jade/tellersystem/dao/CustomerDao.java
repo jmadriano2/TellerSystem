@@ -25,6 +25,10 @@ public class CustomerDao {
 		int customerNumber = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		
+		System.out.println("id: "+id+"\nfirstName: "+firstName+"\nmName: "+middleName+"\nlName: "+lastName+
+				"\naddress: "+address+"\noccupation: "+description+"\ndateJoined: "+dateJoined+"\nbirthdaty: "+
+				birthday+"\nsex: "+sex+"\ncivilStatus: "+civilStatus);
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
