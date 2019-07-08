@@ -61,7 +61,7 @@ public class TransactionBean {
 	public void resetRecipientAccounts() {
 		recipientNumber = "";
 		amount = 0;
-		if(accountIsSelected()) {
+		if (accountIsSelected()) {
 			recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
 		}
 	}
@@ -263,7 +263,7 @@ public class TransactionBean {
 				+ "\nfrom " + accountNumber + " to " + recipientNumber);
 
 		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
-		
+
 		return "transfer_success";
 	}
 
@@ -300,14 +300,16 @@ public class TransactionBean {
 		} else if (account.getBalanceStatus().equals("Credit")) {
 
 			resultingBalance = balance - amount;
-			if (balance > amount) {
-				CustomStringUtils.reverseBalanceStatus(resultingBalanceStatus);
+			System.out.println(amount + " >? " + balance);
+			if (amount > balance) {
+				resultingBalanceStatus = CustomStringUtils.reverseBalanceStatus(resultingBalanceStatus);
 				resultingBalance = Math.abs(resultingBalance);
 			}
-			System.out.println(balance + " - " + amount + " = " + resultingBalance);
+			System.out.println(balance + " - " + amount + " = " + resultingBalance + " the account is in "
+					+ resultingBalanceStatus);
 
 		}
-
+		System.out.println(resultingBalance + " >? " + overdraft);
 		if (resultingBalanceStatus.equals("Debit") && resultingBalance > overdraft) {
 			CustomMessageUtils.showError("Transaction amount must not exceed overdraft limit.");
 			return false;
@@ -316,31 +318,31 @@ public class TransactionBean {
 	}
 
 	public String depositForm() {
-		if(!accountIsSelected()) {
+		if (!accountIsSelected()) {
 			CustomMessageUtils.showWarning("Please select a deposit account");
 			return "#";
 		}
 		return "deposit";
 	}
-	
+
 	public String withdrawalForm() {
-		if(!accountIsSelected()) {
+		if (!accountIsSelected()) {
 			CustomMessageUtils.showWarning("Please select a withdrawal account");
 			return "#";
 		}
 		return "withdraw";
 	}
-	
+
 	public String chooseSender() {
-		if(!accountIsSelected()) {
+		if (!accountIsSelected()) {
 			CustomMessageUtils.showWarning("Please select a sender account");
 			return "#";
 		}
 		return "recipient_account";
 	}
-	
+
 	public String chooseRecipient() {
-		if(!recipientSelected()) {
+		if (!recipientSelected()) {
 			CustomMessageUtils.showWarning("Please select a recipient account");
 			return "#";
 		}
@@ -353,7 +355,7 @@ public class TransactionBean {
 		} else
 			return true;
 	}
-	
+
 	private boolean recipientSelected() {
 		if (recipientNumber.isBlank()) {
 			return false;
