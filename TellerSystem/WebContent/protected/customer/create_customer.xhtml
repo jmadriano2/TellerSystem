@@ -12,6 +12,7 @@
 	<ui:define name="custom">
 		<h:outputStylesheet library="css" name="appStyle.css" />
 		<h:outputScript library="js" name="vcenter.js" />
+		<h:outputScript library="js" name="centerModal.js" />
 	</ui:define>
 
 	<ui:define name="header">
@@ -83,15 +84,29 @@
 				<b:inputTextarea labelColMd="2" colMd="4" label="Description"
 					value="#{customerBean.description}" rows="2" />
 			</b:formGroup>
-			
+
 			<b:inputText labelColMd="6" colMd="6" style="visibility:hidden;" />
 
 			<b:growl />
 
-			<b:commandButton value="Submit"
-				action="#{customerBean.createCustomer()}" look="primary" col-md="2"
-				offset="8" style="width:100%" />
+			<b:modal id="amodal" title="Create Customer"
+				styleClass="confirmationModal" >
+				<p>Would you like to confirm customer creation?</p>
+				<f:facet name="footer">
+					<b:button value="Cancel" dismiss="modal" look="danger" />
+
+					<b:commandButton value="Confirm" look="success"
+						action="#{customerBean.createCustomer()}" />
+				</f:facet>
+			</b:modal>
 		</b:form>
+
+		<b:row>
+			<b:column col-md="2" offset="8">
+				<b:button value="Submit" look="primary"
+					onclick="$('.confirmationModal').modal()" style="width:100%" />
+			</b:column>
+		</b:row>
 	</ui:define>
 
 	<ui:define name="footer">
