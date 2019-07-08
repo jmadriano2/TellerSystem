@@ -198,6 +198,7 @@ public class AccountBean {
 
 				dateCreated = timestamp;
 				balance = LedgerDao.getBalance(accountId);
+				CustomMessageUtils.showSuccess("You have successfully created an account");
 
 				return "create_account_success";
 			}

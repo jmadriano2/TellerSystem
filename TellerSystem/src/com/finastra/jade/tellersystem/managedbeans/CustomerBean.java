@@ -218,6 +218,7 @@ public class CustomerBean {
 			customerList = CustomerDao.getAllCustomers();
 			setCustomerBean(CustomerDao.getCustomer(customerId));
 			System.out.println("returns create_customer_success");
+			CustomMessageUtils.showSuccess("You have successfully created a customer");
 			return "create_customer_success";
 		}
 		CustomMessageUtils.showError("Customer with ID '" + paddedCustomerId() + "' already exists");
@@ -242,6 +243,7 @@ public class CustomerBean {
 	public String amendCustomer() throws ParseException {
 		CustomerDao.amendCustomer(firstName, middleName, lastName, address, occupation, description, customerId);
 		customerList = CustomerDao.getAllCustomers();
+		CustomMessageUtils.showSuccess("You have successfully amended the customer");
 		return "amend_customer_success";
 	}
 }

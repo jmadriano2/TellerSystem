@@ -13,6 +13,10 @@ public class CustomMessageUtils {
 	public static void showWarning(String message) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, message, "Warning!"));
+	}
 
+	public static void showSuccess(String message) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, "Success!"));
 	}
 }

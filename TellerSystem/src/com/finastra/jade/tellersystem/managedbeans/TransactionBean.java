@@ -219,6 +219,43 @@ public class TransactionBean {
 		System.out.println("You have set " + recipientNumber + " as recipient to a transfer!");
 	}
 
+	public String depositForm() {
+		if (CustomValidatorUtils.blankAccount(accountNumber)) {
+			return "#";
+		}
+		return "deposit";
+	}
+
+	public String withdrawalForm() {
+		if (CustomValidatorUtils.blankAccount(accountNumber)) {
+			return "#";
+		}
+		return "withdraw";
+	}
+
+	public String chooseSender() {
+		if (accountNumber.isBlank()) { // prevents double growl...
+			return "#";
+		}
+		return "recipient_account";
+	}
+
+	public String chooseRecipient() {
+		if (CustomValidatorUtils.blankRecipient(recipientNumber)) {
+			return "#";
+		}
+		return "transfer";
+	}
+
+	public String viewTransactionDetails() {
+		setTransactionBean(TransactionDao.getTransaction(traceNumber));
+		if (recipientTraceNumber >= 0) {
+			setRecipient(TransactionDao.getTransaction(recipientTraceNumber));
+		}
+
+		return "view_transaction_details";
+	}
+
 	public String deposit() {
 
 		if (CustomValidatorUtils.zeroAmount(amount) || CustomValidatorUtils.negativeAmount(amount)) {
@@ -229,6 +266,9 @@ public class TransactionBean {
 		int traceNumber = LedgerDao.creditAccount("CrD", amount, accountNumber);
 
 		setTransactionBean(TransactionDao.getTransaction(traceNumber));
+		String currency = accountNumber.substring(0, 3);
+		CustomMessageUtils.showSuccess("You have successfully deposited " + CustomStringUtils.currencyFormat(amount)
+				+ " " + currency + " to the account " + accountNumber);
 
 		return "deposit_success";
 	}
@@ -243,6 +283,9 @@ public class TransactionBean {
 		int traceNumber = LedgerDao.debitAccount("DrW", amount, accountNumber);
 
 		setTransactionBean(TransactionDao.getTransaction(traceNumber));
+		String currency = accountNumber.substring(0, 3);
+		CustomMessageUtils.showSuccess("You have successfully withdrawn " + CustomStringUtils.currencyFormat(amount)
+				+ " " + currency + " from the account " + accountNumber);
 
 		return "withdrawal_success";
 	}
@@ -266,45 +309,11 @@ public class TransactionBean {
 				+ "\nfrom " + accountNumber + " to " + recipientNumber);
 
 		recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
+		String currency = accountNumber.substring(0, 3);
+		CustomMessageUtils.showSuccess("You have successfully trensfered " + CustomStringUtils.currencyFormat(amount)
+				+ " " + currency + " from " + recipientNumber + "to " + accountNumber);
 
 		return "transfer_success";
-	}
-
-	public String viewTransactionDetails() {
-		setTransactionBean(TransactionDao.getTransaction(traceNumber));
-		if (recipientTraceNumber >= 0) {
-			setRecipient(TransactionDao.getTransaction(recipientTraceNumber));
-		}
-
-		return "view_transaction_details";
-	}
-
-	public String depositForm() {
-		if (CustomValidatorUtils.blankAccount(accountNumber)) {
-			return "#";
-		}
-		return "deposit";
-	}
-
-	public String withdrawalForm() {
-		if (CustomValidatorUtils.blankAccount(accountNumber)) {
-			return "#";
-		}
-		return "withdraw";
-	}
-
-	public String chooseSender() {
-		if (accountNumber.isBlank()) { //prevents double growl...
-			return "#";
-		}
-		return "recipient_account";
-	}
-
-	public String chooseRecipient() {
-		if (CustomValidatorUtils.blankRecipient(recipientNumber)) {
-			return "#";
-		}
-		return "transfer";
 	}
 
 }
