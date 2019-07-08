@@ -71,4 +71,28 @@ public class CustomValidatorUtils {
 		}
 		return true;
 	}
+
+	public static boolean blankCustomer(int customerId) {
+		if (customerId==0) {
+			CustomMessageUtils.showWarning("Please select a customer");
+			return true;
+		} else
+			return false;
+	}
+	
+	public static boolean blankAccount(String accountNumber) {
+		if (accountNumber.isBlank()) {
+			CustomMessageUtils.showWarning("Please select an account");
+			return true;
+		} else
+			return false;
+	}
+
+	public static boolean blankRecipient(String recipientNumber) {
+		if (recipientNumber.isBlank()) {
+			CustomMessageUtils.showWarning("Please select a recipient account");
+			return true;
+		} else
+			return false;
+	}
 }

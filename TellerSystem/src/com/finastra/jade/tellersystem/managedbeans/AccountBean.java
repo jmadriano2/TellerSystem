@@ -142,6 +142,7 @@ public class AccountBean {
 	}
 
 	public void resetAccountBean() {
+		accountId = "";
 		type = "S";
 		overdraft = 0;
 		currency = "PHP";
@@ -168,8 +169,7 @@ public class AccountBean {
 	}
 
 	public String createAccountForm() {
-		if (customerId == 0) {
-			CustomMessageUtils.showWarning("Please choose a customer");
+		if (CustomValidatorUtils.blankCustomer(customerId)) {
 			return "#";
 		}
 
@@ -207,7 +207,10 @@ public class AccountBean {
 	}
 
 	public String viewAccountDetails() {
-
+		if (CustomValidatorUtils.blankAccount(accountId)) {
+			return "#";
+		}
+		
 		Account account = AccountDao.getAccount(accountId);
 		account.toString();
 		setAccountBean(account);

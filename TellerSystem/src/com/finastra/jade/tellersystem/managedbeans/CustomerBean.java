@@ -225,6 +225,10 @@ public class CustomerBean {
 	}
 
 	public String viewCustomerDetails() {
+		if(CustomValidatorUtils.blankCustomer(customerId)) {
+			return "#";
+		}
+		
 		setCustomerBean(CustomerDao.getCustomer(customerId));
 
 		return "customer_details";

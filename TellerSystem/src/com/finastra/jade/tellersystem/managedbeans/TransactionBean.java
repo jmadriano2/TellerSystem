@@ -62,7 +62,7 @@ public class TransactionBean {
 	public void resetRecipientAccounts() {
 		recipientNumber = "";
 		amount = 0;
-		if (accountIsSelected()) {
+		if (!CustomValidatorUtils.blankAccount(accountNumber)) {
 			recipientAccounts = TransactionDao.getRecipientAccounts(accountNumber);
 		}
 	}
@@ -280,48 +280,31 @@ public class TransactionBean {
 	}
 
 	public String depositForm() {
-		if (!accountIsSelected()) {
-			CustomMessageUtils.showWarning("Please select a deposit account");
+		if (CustomValidatorUtils.blankAccount(accountNumber)) {
 			return "#";
 		}
 		return "deposit";
 	}
 
 	public String withdrawalForm() {
-		if (!accountIsSelected()) {
-			CustomMessageUtils.showWarning("Please select a withdrawal account");
+		if (CustomValidatorUtils.blankAccount(accountNumber)) {
 			return "#";
 		}
 		return "withdraw";
 	}
 
 	public String chooseSender() {
-		if (!accountIsSelected()) {
-			CustomMessageUtils.showWarning("Please select a sender account");
+		if (accountNumber.isBlank()) { //prevents double growl...
 			return "#";
 		}
 		return "recipient_account";
 	}
 
 	public String chooseRecipient() {
-		if (!recipientSelected()) {
-			CustomMessageUtils.showWarning("Please select a recipient account");
+		if (CustomValidatorUtils.blankRecipient(recipientNumber)) {
 			return "#";
 		}
 		return "transfer";
 	}
 
-	private boolean accountIsSelected() {
-		if (accountNumber.isBlank()) {
-			return false;
-		} else
-			return true;
-	}
-
-	private boolean recipientSelected() {
-		if (recipientNumber.isBlank()) {
-			return false;
-		} else
-			return true;
-	}
 }
