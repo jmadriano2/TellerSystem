@@ -15,6 +15,7 @@ import com.finastra.jade.tellersystem.dao.CustomerDao;
 import com.finastra.jade.tellersystem.object.Customer;
 import com.finastra.jade.tellersystem.util.CustomMessageUtils;
 import com.finastra.jade.tellersystem.util.CustomStringUtils;
+import com.finastra.jade.tellersystem.util.CustomValidatorUtils;
 
 @SessionScoped
 @ManagedBean
@@ -155,11 +156,11 @@ public class CustomerBean {
 	}
 
 	public String getFormattedDate() {
-		return CustomStringUtils.formatDateTime(dateJoined);
+		return CustomStringUtils.formatDate(dateJoined);
 	}
 
 	public String getFormattedDate(Date date) {
-		return CustomStringUtils.formatDateTime(date);
+		return CustomStringUtils.formatDate(date);
 	}
 	
 	public String getParsedSex() {
@@ -202,6 +203,9 @@ public class CustomerBean {
 	}
 
 	public String createCustomer() throws ParseException {
+		if (CustomValidatorUtils.negativeId(customerId)) {
+			return "#";
+		}
 
 		if (!CustomerDao.exists(customerId)) {
 			if (customerId == 0) {

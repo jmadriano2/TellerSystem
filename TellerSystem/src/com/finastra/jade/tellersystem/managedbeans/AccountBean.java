@@ -14,6 +14,7 @@ import com.finastra.jade.tellersystem.dao.LedgerDao;
 import com.finastra.jade.tellersystem.object.Account;
 import com.finastra.jade.tellersystem.object.Balance;
 import com.finastra.jade.tellersystem.util.CustomStringUtils;
+import com.finastra.jade.tellersystem.util.CustomValidatorUtils;
 import com.finastra.jade.tellersystem.util.CustomMessageUtils;
 
 @SessionScoped
@@ -178,6 +179,10 @@ public class AccountBean {
 	}
 
 	public String createAccount() throws ParseException {
+		if (CustomValidatorUtils.negativeAmount(initialDeposit) || CustomValidatorUtils.negativeSequence(sequence)) {
+			return "#";
+		}
+		
 		String paddedCustomerId = paddedCustomerId();
 		String paddedAccountSequence = paddedAccountSequence();
 		accountId = currency + paddedCustomerId + type + paddedAccountSequence;

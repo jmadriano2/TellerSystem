@@ -16,6 +16,7 @@ import com.finastra.jade.tellersystem.object.Transaction;
 import com.finastra.jade.tellersystem.object.TransactionAccount;
 import com.finastra.jade.tellersystem.util.CustomMessageUtils;
 import com.finastra.jade.tellersystem.util.CustomStringUtils;
+import com.finastra.jade.tellersystem.util.CustomValidatorUtils;
 
 @SessionScoped
 @ManagedBean
@@ -220,7 +221,7 @@ public class TransactionBean {
 
 	public String deposit() {
 
-		if (zeroAmount()) {
+		if (CustomValidatorUtils.zeroAmount(amount) || CustomValidatorUtils.negativeAmount(amount)) {
 			return "#";
 		}
 
@@ -234,7 +235,8 @@ public class TransactionBean {
 
 	public String withdraw() {
 
-		if (!validOverdraft() || zeroAmount()) {
+		if (!CustomValidatorUtils.validOverdraft(accountNumber, amount, overdraft)
+				|| CustomValidatorUtils.zeroAmount(amount) || CustomValidatorUtils.negativeAmount(amount)) {
 			return "#";
 		}
 
@@ -247,7 +249,8 @@ public class TransactionBean {
 
 	public String transfer() throws SQLException {
 
-		if (!validOverdraft() || zeroAmount()) {
+		if (!CustomValidatorUtils.validOverdraft(accountNumber, amount, overdraft)
+				|| CustomValidatorUtils.zeroAmount(amount) || CustomValidatorUtils.negativeAmount(amount)) {
 			return "#";
 		}
 
@@ -274,47 +277,6 @@ public class TransactionBean {
 		}
 
 		return "view_transaction_details";
-	}
-
-	private boolean zeroAmount() {
-		if (amount == 0) {
-			CustomMessageUtils.showError("The transaction amount must not be 0");
-			System.out.println("withdrawal amount is 0. -_-");
-			return true;
-		}
-		return false;
-	}
-
-	private boolean validOverdraft() {
-		Account account = AccountDao.getAccount(accountNumber);
-		double balance = account.getBalance();
-		if (account.getAccount_type().equals("S") && amount > balance) {
-			CustomMessageUtils.showError("A savings account cannot be overdrawn.");
-			return false;
-		}
-		double resultingBalance = 0;
-		String resultingBalanceStatus = account.getBalanceStatus();
-
-		if (account.getBalanceStatus().equals("Debit")) {
-			resultingBalance = balance + amount;
-		} else if (account.getBalanceStatus().equals("Credit")) {
-
-			resultingBalance = balance - amount;
-			System.out.println(amount + " >? " + balance);
-			if (amount > balance) {
-				resultingBalanceStatus = CustomStringUtils.reverseBalanceStatus(resultingBalanceStatus);
-				resultingBalance = Math.abs(resultingBalance);
-			}
-			System.out.println(balance + " - " + amount + " = " + resultingBalance + " the account is in "
-					+ resultingBalanceStatus);
-
-		}
-		System.out.println(resultingBalance + " >? " + overdraft);
-		if (resultingBalanceStatus.equals("Debit") && resultingBalance > overdraft) {
-			CustomMessageUtils.showError("Transaction amount must not exceed overdraft limit.");
-			return false;
-		}
-		return true;
 	}
 
 	public String depositForm() {
